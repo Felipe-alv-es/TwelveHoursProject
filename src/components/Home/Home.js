@@ -12,8 +12,11 @@ const Home = () => {
     <Box>
       <Typography sx={getTitleStyle}>Tecnica das 12 Horas</Typography>
       <Box sx={getContentStyle}>
-        <StyledTypography>Renda Extra</StyledTypography>
         <Box>
+          <StyledTypography>Renda Extra</StyledTypography>
+          <StyledTypography>5/5</StyledTypography>
+        </Box>
+        <Box className="">
           <TaskItem />
           <TaskItem />
           <TaskItem />
@@ -22,7 +25,10 @@ const Home = () => {
         </Box>
       </Box>
       <Box sx={getContentStyle}>
-        <StyledTypography>Networking</StyledTypography>
+        <Box>
+          <StyledTypography>Networking</StyledTypography>
+          <StyledTypography>5/5</StyledTypography>
+        </Box>
         <Box>
           <TaskItem />
           <TaskItem />
@@ -31,7 +37,10 @@ const Home = () => {
         </Box>
       </Box>
       <Box sx={getContentStyle}>
-        <StyledTypography>Requalificação</StyledTypography>
+        <Box>
+          <StyledTypography>Requalificação</StyledTypography>
+          <StyledTypography>5/5</StyledTypography>
+        </Box>
         <Box>
           <TaskItem />
           <TaskItem />

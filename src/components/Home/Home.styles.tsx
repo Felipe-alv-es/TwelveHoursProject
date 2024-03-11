@@ -3,23 +3,30 @@ import { SxProps } from "@mui/material/";
 import { Typography } from "@mui/material";
 
 export const getContentStyle = (): SxProps => ({
-  background: "lightBlue",
-  margin: "3%",
-  padding: "0% 3% 0% 3%",
+  margin: "2% 3% 2% 3%",
+  padding: "1.5%",
+  borderStyle: "solid",
+  borderWidth: "1px",
+  borderRadius: "32px",
+  "> div:first-child": {
+    justifyContent: "space-between",
+    paddingRight: "1%",
+  },
   "> div": {
     display: "flex",
-    background: "lightGreen",
-    padding: "1% 0% 1% 0%",
   },
 });
 
 export const getTitleStyle = (): SxProps => ({
   typography: "h4",
-  fontWeight: "bold",
   textAlign: "center",
   paddingTop: "3%",
+  fontWeight: "600",
+  fontFamily: "Kanit",
 });
 
 export const StyledTypography = (props) => {
-  return <Typography variant="h5" fontWeight="bold" {...props} />;
+  return (
+    <Typography variant="h6" fontWeight="600" fontFamily="Kanit" {...props} />
+  );
 };
