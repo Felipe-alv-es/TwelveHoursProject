@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Paper } from "@mui/material";
+import { Paper, Box } from "@mui/material";
 import { getPaperStyle } from "./TaskItem.styles.ts";
+import { FcCheckmark } from "react-icons/fc";
 
 const TaskItem = () => {
   const [seconds, setSeconds] = useState(10);
@@ -26,7 +27,7 @@ const TaskItem = () => {
   console.log(seconds);
   return (
     <Paper sx={getPaperStyle(secondsPercent)} onClick={handleClick}>
-      {seconds > 0 ? 100 - secondsPercent : "Ok"}
+      {seconds > 0 ? 100 - secondsPercent : <FcCheckmark size="48px" />}
     </Paper>
   );
 };

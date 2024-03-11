@@ -1,21 +1,5 @@
 import React from "react";
-import { SxProps } from "@mui/material/";
-import { Typography } from "@mui/material";
-
-export const getContentStyle = (): SxProps => ({
-  margin: "2% 3% 2% 3%",
-  padding: "1.5%",
-  borderStyle: "solid",
-  borderWidth: "1px",
-  borderRadius: "32px",
-  "> div:first-child": {
-    justifyContent: "space-between",
-    paddingRight: "1%",
-  },
-  "> div": {
-    display: "flex",
-  },
-});
+import { Typography, SxProps, Paper } from "@mui/material";
 
 export const getTitleStyle = (): SxProps => ({
   typography: "h4",
@@ -25,8 +9,37 @@ export const getTitleStyle = (): SxProps => ({
   fontFamily: "Kanit",
 });
 
+export const StyledContainer = (props) => {
+  return (
+    <Paper
+      sx={{
+        margin: "2% 10% 2% 10%",
+        padding: "1.5%",
+        borderRadius: "32px",
+        background: `linear-gradient(to right, #46AAB3, #58D5E0)`,
+        "> div:first-child": {
+          justifyContent: "space-between",
+          paddingRight: "1%",
+        },
+        "> div": {
+          display: "flex",
+        },
+      }}
+      elevation={5}
+      {...props}
+    />
+  );
+};
+
 export const StyledTypography = (props) => {
   return (
-    <Typography variant="h6" fontWeight="600" fontFamily="Kanit" {...props} />
+    <Typography
+      variant="h6"
+      fontWeight="500"
+      fontFamily="Kanit"
+      color="white"
+      sx={{ paddingBottom: "2%" }}
+      {...props}
+    />
   );
 };
