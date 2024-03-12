@@ -2,8 +2,9 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import {
   StyledTypography,
-  getContentStyle,
+  StyledContainer,
   getTitleStyle,
+  getSubtitleStyle,
 } from "./Home.styles.tsx";
 import TaskItem from "../TaskItem/TaskItem";
 
@@ -11,20 +12,23 @@ const Home = () => {
   return (
     <Box>
       <Typography sx={getTitleStyle}>Tecnica das 12 Horas</Typography>
-      <Box sx={getContentStyle}>
+      <Typography sx={getSubtitleStyle}>
+        {"Se organize | Faça conexões | Desenvolva seu profissional"}
+      </Typography>
+      <StyledContainer>
         <Box>
           <StyledTypography>Renda Extra</StyledTypography>
           <StyledTypography>5/5</StyledTypography>
         </Box>
-        <Box className="">
+        <Box>
           <TaskItem />
           <TaskItem />
           <TaskItem />
           <TaskItem />
           <TaskItem />
         </Box>
-      </Box>
-      <Box sx={getContentStyle}>
+      </StyledContainer>
+      <StyledContainer>
         <Box>
           <StyledTypography>Networking</StyledTypography>
           <StyledTypography>5/5</StyledTypography>
@@ -35,8 +39,8 @@ const Home = () => {
           <TaskItem />
           <TaskItem />
         </Box>
-      </Box>
-      <Box sx={getContentStyle}>
+      </StyledContainer>
+      <StyledContainer>
         <Box>
           <StyledTypography>Requalificação</StyledTypography>
           <StyledTypography>5/5</StyledTypography>
@@ -46,7 +50,7 @@ const Home = () => {
           <TaskItem />
           <TaskItem />
         </Box>
-      </Box>
+      </StyledContainer>
     </Box>
   );
 };
