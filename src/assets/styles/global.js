@@ -11,7 +11,7 @@ export default createGlobalStyle`
     body {
         font-size: 16px;
         background: #e7e7e7;
-        color: #1a1a1a;
+        color: #2D2D33;
     }
 
     ::-webkit-scrollbar {

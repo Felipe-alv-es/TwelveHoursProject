@@ -9,7 +9,7 @@ export const getPaperStyle = (secondsPercent): SxProps => ({
   placeItems: "center",
   background:
     secondsPercent > 0
-      ? `conic-gradient(#FFFFF7 ${secondsPercent}%, #496F73 ${secondsPercent}%)`
+      ? `conic-gradient(#FFFFF7 ${secondsPercent}%, #B3B3AD ${secondsPercent}%)`
       : "#FFFFF7",
   cursor: "pointer",
 });

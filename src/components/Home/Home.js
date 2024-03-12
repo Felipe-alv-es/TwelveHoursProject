@@ -4,13 +4,17 @@ import {
   StyledTypography,
   StyledContainer,
   getTitleStyle,
+  getSubtitleStyle,
 } from "./Home.styles.tsx";
 import TaskItem from "../TaskItem/TaskItem";
 
-const Home = (props) => {
+const Home = () => {
   return (
     <Box>
       <Typography sx={getTitleStyle}>Tecnica das 12 Horas</Typography>
+      <Typography sx={getSubtitleStyle}>
+        {"Se organize | Faça conexões | Desenvolva seu profissional"}
+      </Typography>
       <StyledContainer>
         <Box>
           <StyledTypography>Renda Extra</StyledTypography>

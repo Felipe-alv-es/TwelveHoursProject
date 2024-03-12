@@ -9,6 +9,13 @@ export const getTitleStyle = (): SxProps => ({
   fontFamily: "Kanit",
 });
 
+export const getSubtitleStyle = (): SxProps => ({
+  typography: "subtitle1",
+  textAlign: "center",
+  fontWeight: "400",
+  fontFamily: "Kanit",
+});
+
 export const StyledContainer = (props) => {
   return (
     <Paper
