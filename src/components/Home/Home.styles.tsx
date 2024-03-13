@@ -23,7 +23,7 @@ export const StyledContainer = (props) => {
         margin: "2% 10% 2% 10%",
         padding: "1.5%",
         borderRadius: "32px",
-        background: `linear-gradient(to right, #46AAB3, #58D5E0)`,
+        background: `linear-gradient(to right, #46AAB3, #358188, #46AAB3)`,
         "> div:first-child": {
           justifyContent: "space-between",
           paddingRight: "1%",

@@ -10,8 +10,8 @@ export default createGlobalStyle`
 
     body {
         font-size: 16px;
-        background: #e7e7e7;
-        color: #2D2D33;
+        background: linear-gradient(to right, #5e64cd, #AA9C42);
+        color: #FFFFF7;
     }
 
     ::-webkit-scrollbar {

@@ -22,7 +22,7 @@ const Home = () => {
         </Box>
         <Box>
           <TaskItem finished />
-          <TaskItem active />
+          <TaskItem active role="extraIncome" />
           <TaskItem locked />
           <TaskItem locked />
           <TaskItem locked />
@@ -34,7 +34,7 @@ const Home = () => {
           <StyledTypography>5/5</StyledTypography>
         </Box>
         <Box>
-          <TaskItem active />
+          <TaskItem active role="networking" />
           <TaskItem locked />
           <TaskItem locked />
           <TaskItem locked />
@@ -46,7 +46,7 @@ const Home = () => {
           <StyledTypography>5/5</StyledTypography>
         </Box>
         <Box>
-          <TaskItem active />
+          <TaskItem active role="requalification" />
           <TaskItem locked />
           <TaskItem locked />
         </Box>
