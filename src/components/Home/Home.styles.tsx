@@ -2,7 +2,7 @@ import React from "react";
 import { Typography, SxProps, Paper } from "@mui/material";
 
 export const getTitleStyle = (): SxProps => ({
-  typography: "h4",
+  typography: "h3",
   textAlign: "center",
   paddingTop: "3%",
   fontWeight: "600",
@@ -23,8 +23,8 @@ export const StyledContainer = (props) => {
         margin: "2% 10% 2% 10%",
         padding: "1.5%",
         borderRadius: "32px",
-        background: `linear-gradient(to right, #46AAB3, #58D5E0)`,
-        "> div:first-child": {
+        background: `linear-gradient(to right, #089CD4, #5DE2EE)`,
+        "> div:first-of-type": {
           justifyContent: "space-between",
           paddingRight: "1%",
         },
@@ -32,7 +32,7 @@ export const StyledContainer = (props) => {
           display: "flex",
         },
       }}
-      elevation={5}
+      elevation={10}
       {...props}
     />
   );
