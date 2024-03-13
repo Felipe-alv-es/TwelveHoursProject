@@ -35,6 +35,8 @@ export const getActiveIconStyle = (): SxProps => ({
   alignItems: "center",
   "> svg": {
     color: "#FFFFF7",
+    height: "50px",
+    width: "50px",
   },
   "> div > .first-title": {
     fontWeight: "400",

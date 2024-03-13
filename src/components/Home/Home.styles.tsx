@@ -24,7 +24,7 @@ export const StyledContainer = (props) => {
         padding: "1.5%",
         borderRadius: "32px",
         background: `linear-gradient(to right, #089CD4, #5DE2EE)`,
-        "> div:first-child": {
+        "> div:first-of-type": {
           justifyContent: "space-between",
           paddingRight: "1%",
         },
@@ -32,7 +32,7 @@ export const StyledContainer = (props) => {
           display: "flex",
         },
       }}
-      elevation={5}
+      elevation={10}
       {...props}
     />
   );
