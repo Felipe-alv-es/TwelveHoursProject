@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getPaperStyle, getActiveIconStyle } from "./TaskItem.styles.ts";
 import { TaskItemProps } from "./TaskItem.types.ts";
 import { Box, Paper, Typography } from "@mui/material";
-import {
-  PiPlayCircleFill,
-  PiPauseCircleFill,
-  PiStopCircleFill,
-} from "react-icons/pi";
+import { PiPlayCircleFill, PiPauseCircleFill } from "react-icons/pi";
 import { RiLock2Fill } from "react-icons/ri";
 import { FaCheck } from "react-icons/fa";
 
 const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
-  ({ active, locked, finished, role, ...props }, ref) => {
+  ({ role, onLocked, ...props }, ref) => {
     const [seconds, setSeconds] = useState(10);
+    const [state, setState] = useState("active");
+
+    useEffect(() => {
+      if (seconds === 0) {
+        setState("finished");
+      }
+    }, [seconds, state]);
 
     const handleClick = () => {
       const interval = setInterval(() => {
@@ -26,7 +29,6 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
           }
         });
       }, 1000);
-
       return () => clearInterval(interval);
     };
 
@@ -39,66 +41,28 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
     };
 
     const getIcon = () => {
-      if (seconds === 10) {
-        return <PiPlayCircleFill />;
-      } else if (seconds === 0) {
-        return <PiStopCircleFill />;
-      } else {
+      if (seconds < 10 && !onLocked && state !== "finished") {
         return <PiPauseCircleFill />;
+      } else if (seconds === 10 && !onLocked && state !== "finished") {
+        return <PiPlayCircleFill />;
       }
     };
 
     const getContent = () => {
-      if (locked) {
+      if (onLocked) {
         return <RiLock2Fill size="32px" color="#828282" />;
-      } else if (finished) {
+      } else if (state === "finished") {
         return <FaCheck color="#FFFFF7" size="32px" />;
       } else {
         switch (role) {
           case "extraIncome":
-            return (
-              <Box sx={getActiveIconStyle()}>
-                {getIcon()}
-                <Box>
-                  <Typography className="first-title">
-                    Vamos ganhar um dinheiro extra!
-                  </Typography>
-                  <Typography className="second-title">
-                    {`Tempo restante: ${formatTime(seconds)}`}
-                  </Typography>
-                </Box>
-              </Box>
-            );
+            return "Vamos ganhar um dinheiro extra!";
           case "networking":
-            return (
-              <Box sx={getActiveIconStyle()}>
-                {getIcon()}
-                <Box>
-                  <Typography className="first-title">
-                    Vamos expandir nossas redes!
-                  </Typography>
-                  <Typography className="second-title">
-                    {`Tempo restante: ${formatTime(seconds)}`}
-                  </Typography>
-                </Box>
-              </Box>
-            );
+            return " Vamos expandir nossas redes!";
           case "requalification":
-            return (
-              <Box sx={getActiveIconStyle()}>
-                {getIcon()}
-                <Box>
-                  <Typography className="first-title">
-                    Vamos nos aprimorar profissionalmente!
-                  </Typography>
-                  <Typography className="second-title">
-                    {`Tempo restante: ${formatTime(seconds)}`}
-                  </Typography>
-                </Box>
-              </Box>
-            );
+            return " Vamos nos aprimorar profissionalmente!";
           default:
-            return <Typography>{"Nenhuma ação programada =("}</Typography>;
+            return "Nenhuma ação programada =(";
         }
       }
     };
@@ -107,11 +71,23 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
 
     return (
       <Paper
-        sx={getPaperStyle(active, locked)}
+        sx={getPaperStyle(state, onLocked)}
         onClick={handleClick}
         {...props}
       >
-        {getContent()}
+        <Box sx={getActiveIconStyle()}>
+          {getIcon()}
+          <Box>
+            <Typography className="first-title">{getContent()}</Typography>
+            <Typography className="second-title">
+              {onLocked
+                ? ""
+                : state === "finished"
+                ? ""
+                : `Tempo restante: ${formatTime(seconds)}`}
+            </Typography>
+          </Box>
+        </Box>
       </Paper>
     );
   }

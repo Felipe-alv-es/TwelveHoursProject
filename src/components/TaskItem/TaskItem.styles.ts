@@ -2,30 +2,30 @@ import { SxProps } from "@mui/material/";
 import { TaskItemProps } from "./TaskItem.types.ts";
 
 const getItemColor = (
-  active?: TaskItemProps["active"],
-  locked?: TaskItemProps["locked"]
+  state?: TaskItemProps["state"],
+  onLocked?: TaskItemProps["onLocked"]
 ) => {
-  if (locked) {
+  if (onLocked) {
     return "#D4D4D4";
-  } else if (active) {
+  } else if (state === "active") {
     return "linear-gradient(to right, #B34684, #B3A446)";
   }
   return "linear-gradient(to right, #228B22, #3CB371)";
 };
 
 export const getPaperStyle = (
-  active?: TaskItemProps["active"],
-  locked?: TaskItemProps["locked"]
+  state?: TaskItemProps["state"],
+  onLocked?: TaskItemProps["onLocked"]
 ): SxProps => ({
-  height: active ? 96 : 64,
-  width: active ? 192 : 64,
-  minWidth: active ? 192 : 64,
+  height: state === "active" && !onLocked ? 96 : 64,
+  width: state === "active" && !onLocked ? 192 : 64,
+  minWidth: state === "active" && !onLocked ? 192 : 64,
   marginRight: "1%",
   display: "grid",
   placeItems: "center",
   alignSelf: "end",
-  pointerEvents: locked ? "none" : "auto",
-  background: getItemColor(active, locked),
+  pointerEvents: onLocked ? "none" : "auto",
+  background: getItemColor(state, onLocked),
   cursor: "pointer",
 });
 
