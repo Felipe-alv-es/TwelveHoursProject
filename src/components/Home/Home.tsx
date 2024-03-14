@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import {
   StyledTypography,
@@ -17,28 +17,27 @@ const Home = () => {
     { id: 5, status: "active" },
   ]);
 
-  useEffect(() => {
-    // Verifica se algum TaskItem mudou para "finished"
-    const hasFinished = taskItems.some((item) => item.status === "finished");
-
-    if (hasFinished) {
-      // Atualiza os itens subsequentes para "active"
-      const updatedItems = taskItems.map((item, index) => {
-        if (index > taskItems.findIndex((item) => item.status === "finished")) {
-          return { ...item, status: "active" };
-        }
-        return item;
-      });
-      setTaskItems(updatedItems);
-    }
-  }, [taskItems]);
+  const handleItemComplete = (itemId) => {
+    const updatedItems = taskItems.map((item) => {
+      if (item.id === itemId) {
+        return { ...item, status: "finished" };
+      }
+      return item;
+    });
+    setTaskItems(updatedItems);
+  };
 
   const renderItems = () => {
-    let previousItemStatus = "inactive"; // Estado inicial do item anterior
     return taskItems.map((task, index) => {
-      const onLocked = previousItemStatus === "active";
-      previousItemStatus = task.status; // Atualiza o estado do item anterior
-      return <TaskItem key={task.id} state={task.status} onLocked={onLocked} />;
+      const onLocked = index > 0 && taskItems[index - 1].status === "active";
+      return (
+        <TaskItem
+          key={task.id}
+          state={task.status}
+          onLocked={onLocked}
+          onComplete={() => handleItemComplete(task.id)}
+        />
+      );
     });
   };
 

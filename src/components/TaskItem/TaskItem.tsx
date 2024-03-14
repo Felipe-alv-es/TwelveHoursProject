@@ -7,29 +7,32 @@ import { RiLock2Fill } from "react-icons/ri";
 import { FaCheck } from "react-icons/fa";
 
 const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
-  ({ role, onLocked, ...props }, ref) => {
+  ({ role, onLocked, onComplete, ...props }, ref) => {
     const [seconds, setSeconds] = useState(10);
     const [state, setState] = useState("active");
 
     useEffect(() => {
       if (seconds === 0) {
         setState("finished");
+        onComplete(); // Informa ao componente pai que o item foi concluído
       }
-    }, [seconds, state]);
+    }, [seconds, onComplete]);
 
     const handleClick = () => {
-      const interval = setInterval(() => {
-        setSeconds((prevSeconds) => {
-          if (prevSeconds > 0) {
-            return prevSeconds - 1;
-          } else {
-            clearInterval(interval);
-            console.log("Contagem regressiva concluída!");
-            return prevSeconds;
-          }
-        });
-      }, 1000);
-      return () => clearInterval(interval);
+      if (!onLocked && state !== "finished") {
+        const interval = setInterval(() => {
+          setSeconds((prevSeconds) => {
+            if (prevSeconds > 0) {
+              return prevSeconds - 1;
+            } else {
+              clearInterval(interval);
+              console.log("Contagem regressiva concluída!");
+              return prevSeconds;
+            }
+          });
+        }, 1000);
+        return () => clearInterval(interval);
+      }
     };
 
     const formatTime = (seconds) => {
