@@ -10,16 +10,17 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
   ({ role, onLocked, onComplete, ...props }, ref) => {
     const [seconds, setSeconds] = useState(10);
     const [state, setState] = useState("active");
+    const [timerStarted, setTimerStarted] = useState(false);
 
     useEffect(() => {
-      if (seconds === 0) {
+      if (seconds === 0 && state !== "finished") {
         setState("finished");
-        onComplete(); // Informa ao componente pai que o item foi concluído
+        onComplete();
       }
-    }, [seconds, onComplete]);
+    }, [seconds, state, onComplete]);
 
     const handleClick = () => {
-      if (!onLocked && state !== "finished") {
+      if (!onLocked && state !== "finished" && !timerStarted) {
         const interval = setInterval(() => {
           setSeconds((prevSeconds) => {
             if (prevSeconds > 0) {
@@ -31,7 +32,7 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
             }
           });
         }, 1000);
-        return () => clearInterval(interval);
+        setTimerStarted(true);
       }
     };
 
