@@ -1,6 +1,6 @@
 export interface TaskItemProps {
-  active: boolean;
-  locked: boolean;
-  finished: boolean;
-  role: "extraIncome" | "networking" | "requalification";
+  state: string;
+  onLocked?: boolean;
+  onComplete: () => void;
+  role?: "extraIncome" | "networking" | "requalification";
 }
