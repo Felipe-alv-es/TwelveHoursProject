@@ -10,9 +10,9 @@ const Home = () => {
       <Typography sx={getSubtitleStyle()}>
         {"Se organize | Faça conexões | Desenvolva seu profissional"}
       </Typography>
-      <TaskGroup />
-      <TaskGroup />
-      <TaskGroup />
+      <TaskGroup role="extraIncome" />
+      <TaskGroup role="networking" />
+      <TaskGroup role="requalification" />
     </Box>
   );
 };
