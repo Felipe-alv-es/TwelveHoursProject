@@ -24,7 +24,7 @@ export const getPaperStyle = (
   display: "grid",
   placeItems: "center",
   alignSelf: "end",
-  pointerEvents: onLocked ? "none" : "auto",
+  pointerEvents: onLocked || state === "finished" ? "none" : "auto",
   background: getItemColor(state, onLocked),
   cursor: "pointer",
 });
