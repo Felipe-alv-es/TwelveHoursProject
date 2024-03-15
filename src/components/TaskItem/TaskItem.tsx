@@ -71,8 +71,6 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
       }
     };
 
-    console.log(seconds);
-
     return (
       <Paper
         sx={getPaperStyle(state, onLocked)}
