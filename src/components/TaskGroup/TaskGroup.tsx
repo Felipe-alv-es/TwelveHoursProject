@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, IconButton } from "@mui/material";
 import { StyledTypography, StyledContainer } from "./TaskGroup.styles.tsx";
 import TaskItem from "../TaskItem/TaskItem.tsx";
@@ -8,6 +8,13 @@ import AddButton from "../AddButton/AddButton.tsx";
 const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
   ({ role, quantity = 0 }, ref) => {
     const [taskItems, setTaskItems] = useState([{ id: 1, status: "active" }]);
+    const [elementCount, setElementCount] = useState(0);
+
+    const ElementRef = useRef(null as any);
+
+    useEffect(() => {
+      setElementCount(ElementRef?.current?.childNodes.length - 1);
+    }, [elementCount, taskItems]);
 
     quantity = role === "extraIncome" ? 4 : role === "networking" ? 3 : 2;
 
@@ -38,6 +45,17 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
       setTaskItems([...taskItems, newItem]);
     };
 
+    const handleRemoveItem = () => {
+      if (taskItems.length === 0) {
+        return;
+      }
+      const updatedTaskItems = [...taskItems];
+
+      updatedTaskItems.pop();
+
+      setTaskItems(updatedTaskItems);
+    };
+
     const renderItems = () => {
       return taskItems.map((task, index) => {
         const onLocked = index > 0 && taskItems[index - 1].status === "active";
@@ -53,37 +71,74 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
       });
     };
 
+    const selectTextColor = () => {
+      if (
+        (role === "extraIncome" && elementCount > 5) ||
+        (role === "networking" && elementCount > 4) ||
+        (role === "requalification" && elementCount > 3)
+      ) {
+        return "#C62828";
+      } else if (
+        (role === "extraIncome" && elementCount < 5) ||
+        (role === "networking" && elementCount < 4) ||
+        (role === "requalification" && elementCount < 3)
+      ) {
+        return "yellow";
+      }
+      return "white";
+    };
+
     return (
       <Box>
         <StyledContainer>
           <Box>
-            <StyledTypography>
-              {role === "extraIncome"
-                ? "Renda Extra"
-                : role === "networking"
-                ? "Networking"
-                : "Requalificação"}
-            </StyledTypography>
-            <StyledTypography>
-              {role === "extraIncome"
-                ? "5/5"
-                : role === "networking"
-                ? "4/4"
-                : "3/3"}
-            </StyledTypography>
-          </Box>
-          <Box>
-            {renderItems()}{" "}
-            <IconButton
+            <Box>
+              <StyledTypography>
+                {role === "extraIncome"
+                  ? "Renda Extra"
+                  : role === "networking"
+                  ? "Networking"
+                  : "Requalificação"}
+              </StyledTypography>
+            </Box>
+            <Box
               sx={{
+                display: "flex",
                 alignItems: "center",
-                height: "fit-content",
               }}
-              onClick={() => handleAddItem()}
             >
-              <AddButton />
-            </IconButton>
+              <IconButton
+                sx={{
+                  alignItems: "center",
+                  height: "fit-content",
+                }}
+                onClick={() => handleRemoveItem()}
+              >
+                <AddButton minus />
+              </IconButton>
+              <StyledTypography
+                sx={{
+                  color: selectTextColor(),
+                }}
+              >
+                {role === "extraIncome"
+                  ? `${elementCount}/5`
+                  : role === "networking"
+                  ? `${elementCount}/4`
+                  : `${elementCount}/3`}
+              </StyledTypography>
+              <IconButton
+                sx={{
+                  alignItems: "center",
+                  height: "fit-content",
+                }}
+                onClick={() => handleAddItem()}
+              >
+                <AddButton />
+              </IconButton>
+            </Box>
           </Box>
+          <Box ref={ElementRef}>{renderItems()} </Box>
         </StyledContainer>
       </Box>
     );
