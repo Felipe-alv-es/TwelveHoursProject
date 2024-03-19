@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Box, IconButton } from "@mui/material";
-import { StyledTypography, StyledContainer } from "./TaskGroup.styles.tsx";
+import { Box, IconButton, Typography } from "@mui/material";
+import {
+  StyledTypography,
+  StyledContainer,
+  StyledSubtitle,
+} from "./TaskGroup.styles.tsx";
 import TaskItem from "../TaskItem/TaskItem.tsx";
 import { TaskGroupProps } from "./TaskGroup.types.ts";
 import AddButton from "../AddButton/AddButton.tsx";
@@ -92,7 +96,12 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
       <Box>
         <StyledContainer>
           <Box>
-            <Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
               <StyledTypography>
                 {role === "extraIncome"
                   ? "Renda Extra"
@@ -100,6 +109,13 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
                   ? "Networking"
                   : "Requalificação"}
               </StyledTypography>
+              <StyledSubtitle>
+                {role === "extraIncome"
+                  ? "Explore novas oportunidades para aumentar sua renda"
+                  : role === "networking"
+                  ? "Construa conexões sólidas para impulsionar seu sucesso"
+                  : "Investir em requalificação é o caminho para evoluir profissionalmente"}
+              </StyledSubtitle>
             </Box>
             <Box
               sx={{

@@ -6,7 +6,9 @@ import TaskGroup from "../TaskGroup/TaskGroup.tsx";
 const Home = () => {
   return (
     <Box>
-      <Typography sx={getTitleStyle()}>Técnica das 12 Horas</Typography>
+      <Box sx={{ display: "grid", placeItems: "center" }}>
+        <Typography sx={getTitleStyle()}>Técnica das 12 Horas</Typography>
+      </Box>
       <Typography sx={getSubtitleStyle()}>
         {"Se organize | Faça conexões | Desenvolva seu profissional"}
       </Typography>

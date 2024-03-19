@@ -30,7 +30,25 @@ export const StyledTypography = (props) => {
       fontWeight="500"
       fontFamily="Kanit"
       color="white"
+      whiteSpace="nowrap"
       sx={{ paddingBottom: "2%" }}
+      {...props}
+    />
+  );
+};
+
+export const StyledSubtitle = (props) => {
+  return (
+    <Typography
+      variant="body2"
+      fontWeight="300"
+      fontFamily="Kanit"
+      paddingLeft="3%"
+      whiteSpace="nowrap"
+      paddingBottom="1.2%"
+      alignSelf="center"
+      color="white"
+      fontStyle="italic"
       {...props}
     />
   );
