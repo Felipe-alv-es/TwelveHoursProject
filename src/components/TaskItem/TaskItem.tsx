@@ -47,7 +47,7 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
       }
     };
 
-    console.log(timerStarted);
+    // console.log(timerStarted);
 
     const formatTime = (seconds) => {
       const minutes = Math.floor(seconds / 60);
@@ -58,7 +58,7 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
     };
 
     const getIcon = () => {
-      if (seconds < 10 && !onLocked && state !== "finished") {
+      if (!onLocked && state !== "finished") {
         return timerStarted ? <PiPauseCircleFill /> : <PiPlayCircleFill />;
       } else if (seconds === 10 && !onLocked && state !== "finished") {
         return <PiPlayCircleFill />;

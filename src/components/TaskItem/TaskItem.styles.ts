@@ -31,7 +31,9 @@ export const getPaperStyle = (
   cursor: "pointer",
   transform: "translateY(-3%)",
   animation:
-    seconds < 10 && seconds > 0 && timerStarted ? "floater 1.5s infinite" : "",
+    timerStarted && seconds && seconds > 0 && timerStarted
+      ? "floater 1.5s infinite"
+      : "",
   transition: "transform ease 0.5s",
   ":hover": {
     transform: timerStarted ? "" : "scale(1.05, 1.05)",
