@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { getPaperStyle, getActiveIconStyle } from "./TaskItem.styles.ts";
 import { TaskItemProps } from "./TaskItem.types.ts";
 import { Box, Paper, Typography } from "@mui/material";
@@ -11,6 +11,7 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
     const [seconds, setSeconds] = useState(10);
     const [state, setState] = useState("active");
     const [timerStarted, setTimerStarted] = useState(false);
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     useEffect(() => {
       if (seconds === 0 && state !== "finished") {
@@ -20,21 +21,33 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
     }, [seconds, state, onComplete]);
 
     const handleClick = () => {
-      if (!onLocked && state !== "finished" && !timerStarted) {
-        const interval = setInterval(() => {
-          setSeconds((prevSeconds) => {
-            if (prevSeconds > 0) {
-              return prevSeconds - 1;
-            } else {
-              clearInterval(interval);
-              console.log("Contagem regressiva concluída!");
-              return prevSeconds;
-            }
-          });
-        }, 1000);
-        setTimerStarted(true);
+      if (!onLocked && state !== "finished") {
+        if (!timerStarted) {
+          intervalRef.current = setInterval(() => {
+            setSeconds((prevSeconds) => {
+              if (prevSeconds > 0) {
+                return prevSeconds - 1;
+              } else {
+                if (intervalRef.current) {
+                  clearInterval(intervalRef.current);
+                }
+                console.log("Contagem regressiva concluída!");
+                setTimerStarted(false);
+                return prevSeconds;
+              }
+            });
+          }, 1000);
+          setTimerStarted(true);
+        } else {
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+          }
+          setTimerStarted(false);
+        }
       }
     };
+
+    console.log(timerStarted);
 
     const formatTime = (seconds) => {
       const minutes = Math.floor(seconds / 60);
@@ -46,7 +59,7 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
 
     const getIcon = () => {
       if (seconds < 10 && !onLocked && state !== "finished") {
-        return <PiPauseCircleFill />;
+        return timerStarted ? <PiPauseCircleFill /> : <PiPlayCircleFill />;
       } else if (seconds === 10 && !onLocked && state !== "finished") {
         return <PiPlayCircleFill />;
       }
@@ -73,7 +86,7 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
 
     return (
       <Paper
-        sx={getPaperStyle(state, onLocked)}
+        sx={getPaperStyle(seconds, state, onLocked, timerStarted)}
         onClick={handleClick}
         {...props}
       >
