@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Snackbar } from "@mui/material";
 import {
   StyledTypography,
   StyledContainer,
@@ -13,6 +13,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
   ({ role, quantity = 0 }, ref) => {
     const [taskItems, setTaskItems] = useState([{ id: 1, status: "active" }]);
     const [elementCount, setElementCount] = useState(0);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
 
     const ElementRef = useRef(null as any);
 
@@ -42,11 +43,15 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
     };
 
     const handleAddItem = () => {
-      const newItem = {
-        id: taskItems.length + 2,
-        status: "active",
-      };
-      setTaskItems([...taskItems, newItem]);
+      if (taskItems.length > 9) {
+        setOpenSnackbar(true);
+      } else {
+        const newItem = {
+          id: taskItems.length + 2,
+          status: "active",
+        };
+        setTaskItems([...taskItems, newItem]);
+      }
     };
 
     const handleRemoveItem = () => {
@@ -156,6 +161,12 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
           </Box>
           <Box ref={ElementRef}>{renderItems()} </Box>
         </StyledContainer>
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={2000}
+          message="Limite de Itens atingido"
+          onClose={() => setOpenSnackbar(false)}
+        />
       </Box>
     );
   }
