@@ -8,6 +8,7 @@ import {
 import TaskItem from "../TaskItem/TaskItem.tsx";
 import { TaskGroupProps } from "./TaskGroup.types.ts";
 import AddButton from "../AddButton/AddButton.tsx";
+import Alarm03 from "../../assets/audio/Alarm03.wav";
 
 const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
   ({ role, quantity = 0 }, ref) => {
@@ -16,6 +17,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
     const ElementRef = useRef(null as any);
+    const audioRef = useRef<HTMLAudioElement>(null);
 
     useEffect(() => {
       setElementCount(ElementRef?.current?.childNodes.length - 1);
@@ -35,6 +37,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
     const handleItemComplete = (itemId) => {
       const updatedItems = taskItems.map((item) => {
         if (item.id === itemId) {
+          audioRef.current?.play();
           return { ...item, status: "finished" };
         }
         return item;
@@ -167,6 +170,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
           message="Limite de Itens atingido"
           onClose={() => setOpenSnackbar(false)}
         />
+        <audio src={Alarm03} ref={audioRef} />
       </Box>
     );
   }

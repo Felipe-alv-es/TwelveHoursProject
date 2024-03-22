@@ -69,3 +69,46 @@ export const getActiveIconStyle = (): SxProps => ({
     fontSize: "12px",
   },
 });
+
+export const getModalStyle = (): SxProps => ({
+  display: "grid",
+  placeItems: "center",
+  "> div:nth-child(3n)": {
+    background: "#FFFFF7",
+    borderTopRightRadius: "16px",
+    "> div:first-of-type": {
+      background: "linear-gradient(to right, #B34684, #B3A446)",
+      textAlign: "center",
+      padding: "16px",
+      borderTopRightRadius: "16px",
+      "> p": {
+        fontWeight: "300",
+        fontFamily: "Kanit",
+        textAlign: "center",
+        color: "#FFFFF7",
+        fontSize: "20px",
+      },
+    },
+    "> div:nth-child(2n)": {
+      display: "grid",
+      placeItems: "center",
+      padding: "32px 0px 0px 0px",
+      "> svg": {
+        height: "64px",
+        width: "64px",
+      },
+      "> p": {
+        marginTop: "16px",
+      },
+    },
+    "> div:nth-child(3n)": {
+      margin: "16px",
+      placeItems: "center",
+      display: "grid",
+      "> button": {
+        background: "#E9E9E9",
+        ":hover": { background: "#E0E0E0" },
+      },
+    },
+  },
+});
