@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Snackbar } from "@mui/material";
 import {
   StyledTypography,
   StyledContainer,
@@ -8,13 +8,16 @@ import {
 import TaskItem from "../TaskItem/TaskItem.tsx";
 import { TaskGroupProps } from "./TaskGroup.types.ts";
 import AddButton from "../AddButton/AddButton.tsx";
+import Alarm03 from "../../assets/audio/Alarm03.wav";
 
 const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
   ({ role, quantity = 0 }, ref) => {
     const [taskItems, setTaskItems] = useState([{ id: 1, status: "active" }]);
     const [elementCount, setElementCount] = useState(0);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
 
     const ElementRef = useRef(null as any);
+    const audioRef = useRef<HTMLAudioElement>(null);
 
     useEffect(() => {
       setElementCount(ElementRef?.current?.childNodes.length - 1);
@@ -34,6 +37,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
     const handleItemComplete = (itemId) => {
       const updatedItems = taskItems.map((item) => {
         if (item.id === itemId) {
+          audioRef.current?.play();
           return { ...item, status: "finished" };
         }
         return item;
@@ -42,11 +46,15 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
     };
 
     const handleAddItem = () => {
-      const newItem = {
-        id: taskItems.length + 2,
-        status: "active",
-      };
-      setTaskItems([...taskItems, newItem]);
+      if (taskItems.length > 9) {
+        setOpenSnackbar(true);
+      } else {
+        const newItem = {
+          id: taskItems.length + 2,
+          status: "active",
+        };
+        setTaskItems([...taskItems, newItem]);
+      }
     };
 
     const handleRemoveItem = () => {
@@ -156,6 +164,13 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
           </Box>
           <Box ref={ElementRef}>{renderItems()} </Box>
         </StyledContainer>
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={2000}
+          message="Limite de Itens atingido"
+          onClose={() => setOpenSnackbar(false)}
+        />
+        <audio src={Alarm03} ref={audioRef} />
       </Box>
     );
   }

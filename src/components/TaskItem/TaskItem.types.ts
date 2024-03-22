@@ -3,5 +3,5 @@ export interface TaskItemProps {
   onLocked?: boolean;
   onComplete: () => void;
   role?: string;
-  seconds: number;
+  seconds?: number;
 }

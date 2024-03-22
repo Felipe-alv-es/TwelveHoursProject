@@ -1,10 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
-import { getPaperStyle, getActiveIconStyle } from "./TaskItem.styles.ts";
+import {
+  getPaperStyle,
+  getActiveIconStyle,
+  getModalStyle,
+} from "./TaskItem.styles.ts";
 import { TaskItemProps } from "./TaskItem.types.ts";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography, Modal, IconButton } from "@mui/material";
 import { PiPlayCircleFill, PiPauseCircleFill } from "react-icons/pi";
 import { RiLock2Fill } from "react-icons/ri";
 import { FaCheck } from "react-icons/fa";
+import { FcAlarmClock } from "react-icons/fc";
+import { IoClose } from "react-icons/io5";
 
 const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
   ({ role, onLocked, onComplete, ...props }, ref) => {
@@ -12,10 +18,14 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
     const [state, setState] = useState("active");
     const [timerStarted, setTimerStarted] = useState(false);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const [modalOpen, setModalOpen] = React.useState(false);
+    const handleOpen = () => setModalOpen(true);
+    const handleClose = () => setModalOpen(false);
 
     useEffect(() => {
       if (seconds === 0 && state !== "finished") {
         setState("finished");
+        handleOpen();
         onComplete();
       }
     }, [seconds, state, onComplete]);
@@ -47,8 +57,6 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
       }
     };
 
-    console.log(timerStarted);
-
     const formatTime = (seconds) => {
       const minutes = Math.floor(seconds / 60);
       const remainingSeconds = seconds % 60;
@@ -58,7 +66,7 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
     };
 
     const getIcon = () => {
-      if (seconds < 10 && !onLocked && state !== "finished") {
+      if (!onLocked && state !== "finished") {
         return timerStarted ? <PiPauseCircleFill /> : <PiPlayCircleFill />;
       } else if (seconds === 10 && !onLocked && state !== "finished") {
         return <PiPlayCircleFill />;
@@ -103,6 +111,22 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
             </Typography>
           </Box>
         </Box>
+        <Modal open={modalOpen} onClose={handleClose} sx={getModalStyle()}>
+          <Box>
+            <Box>
+              <Typography>Tempo de tarefa finalizado</Typography>
+            </Box>
+            <Box>
+              <FcAlarmClock />
+              <Typography>00:00</Typography>
+            </Box>
+            <Box>
+              <IconButton onClick={handleClose}>
+                <IoClose />
+              </IconButton>
+            </Box>
+          </Box>
+        </Modal>
       </Paper>
     );
   }
