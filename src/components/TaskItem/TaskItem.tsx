@@ -118,7 +118,6 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
             </Box>
             <Box>
               <FcAlarmClock />
-              <Typography>00:00</Typography>
             </Box>
             <Box>
               <IconButton onClick={handleClose}>

@@ -96,6 +96,17 @@ export const getModalStyle = (): SxProps => ({
       "> svg": {
         height: "64px",
         width: "64px",
+        marginBottom: "8px",
+        animation:
+          "despertador 0.2s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite",
+        "@keyframes despertador": {
+          "0%": { transform: "rotate(0deg)" },
+          "20%": { transform: "rotate(0deg)" },
+          "40%": { transform: "rotate(15deg)" },
+          "76%": { transform: "rotate(-15deg)" },
+          "80%": { transform: "rotate(15deg)" },
+          "100%": { transform: "rotate(0deg)" },
+        },
       },
       "> p": {
         marginTop: "16px",
