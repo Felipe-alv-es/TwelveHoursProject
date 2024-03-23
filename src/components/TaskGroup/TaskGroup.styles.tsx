@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Paper, SxProps } from "@mui/material";
+import { Typography, Paper } from "@mui/material";
 
 export const StyledContainer = (props) => {
   return (
