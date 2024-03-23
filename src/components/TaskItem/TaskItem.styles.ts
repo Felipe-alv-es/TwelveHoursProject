@@ -73,7 +73,7 @@ export const getActiveIconStyle = (): SxProps => ({
 export const getModalStyle = (): SxProps => ({
   display: "grid",
   placeItems: "center",
-  "> div:nth-child(3n)": {
+  "> div:nth-of-type(3n)": {
     background: "#FFFFF7",
     borderTopRightRadius: "16px",
     "> div:first-of-type": {
@@ -89,7 +89,7 @@ export const getModalStyle = (): SxProps => ({
         fontSize: "20px",
       },
     },
-    "> div:nth-child(2n)": {
+    "> div:nth-of-type(2n)": {
       display: "grid",
       placeItems: "center",
       padding: "32px 0px 0px 0px",
@@ -112,7 +112,7 @@ export const getModalStyle = (): SxProps => ({
         marginTop: "16px",
       },
     },
-    "> div:nth-child(3n)": {
+    "> div:nth-of-type(3n)": {
       margin: "16px",
       placeItems: "center",
       display: "grid",
