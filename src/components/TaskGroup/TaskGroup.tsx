@@ -12,18 +12,28 @@ import Alarm03 from "../../assets/audio/Alarm03.wav";
 
 const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
   ({ role, quantity = 0 }, ref) => {
-    const localStorageKey = `${role}_taskItems`; // Chave única para o localStorage
+    const localStorageKey = `${role}_taskItems`;
     const [taskItems, setTaskItems] = useState(() => {
       const savedItems = localStorage.getItem(localStorageKey);
-      return savedItems
-        ? JSON.parse(savedItems)
-        : [{ id: 1, status: "active" }];
+      if (savedItems) {
+        return JSON.parse(savedItems);
+      } else {
+        return [{ id: 1, status: "active" }];
+      }
     });
     const [elementCount, setElementCount] = useState(0);
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
     const ElementRef = useRef(null as any);
     const audioRef = useRef<HTMLAudioElement>(null);
+
+    useEffect(() => {
+      const savedItems = localStorage.getItem(localStorageKey);
+      if (savedItems) {
+        const parsedItems = JSON.parse(savedItems);
+        setTaskItems(parsedItems);
+      }
+    }, [localStorageKey]);
 
     useEffect(() => {
       setElementCount(ElementRef?.current?.childNodes.length - 1);
@@ -61,9 +71,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
         return;
       }
       const updatedTaskItems = [...taskItems];
-
       updatedTaskItems.pop();
-
       setTaskItems(updatedTaskItems);
     };
 
