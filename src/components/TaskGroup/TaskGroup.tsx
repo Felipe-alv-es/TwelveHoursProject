@@ -43,16 +43,19 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
       localStorage.setItem(localStorageKey, JSON.stringify(taskItems));
     }, [taskItems, localStorageKey]);
 
-    const handleItemComplete = (itemId) => {
-      const updatedItems = taskItems.map((item) => {
+    const handleItemComplete = (itemId: any) => {
+      const updatedItems = taskItems.map((item: { id: any }) => {
         if (item.id === itemId) {
           audioRef.current?.play();
           return { ...item, status: "finished" };
         }
         return item;
       });
+
       setTaskItems(updatedItems);
     };
+
+    console.log(taskItems[0].status);
 
     const handleAddItem = () => {
       if (taskItems.length > 9) {
@@ -76,18 +79,24 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
     };
 
     const renderItems = () => {
-      return taskItems.map((task, index) => {
-        const onLocked = index > 0 && taskItems[index - 1].status === "active";
-        return (
-          <TaskItem
-            key={task.id}
-            state={task.status}
-            onLocked={onLocked}
-            role={role}
-            onComplete={() => handleItemComplete(task.id)}
-          />
-        );
-      });
+      return taskItems.map(
+        (
+          task: { id: React.Key | null | undefined; status: string },
+          index: number
+        ) => {
+          const onLocked =
+            index > 0 && taskItems[index - 1].status === "active";
+          return (
+            <TaskItem
+              key={task.id}
+              state={task.status}
+              onLocked={onLocked}
+              role={role}
+              onComplete={() => handleItemComplete(task.id)}
+            />
+          );
+        }
+      );
     };
 
     const selectTextColor = () => {
