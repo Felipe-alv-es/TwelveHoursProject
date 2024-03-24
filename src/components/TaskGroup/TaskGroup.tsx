@@ -12,7 +12,13 @@ import Alarm03 from "../../assets/audio/Alarm03.wav";
 
 const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
   ({ role, quantity = 0 }, ref) => {
-    const [taskItems, setTaskItems] = useState([{ id: 1, status: "active" }]);
+    const localStorageKey = `${role}_taskItems`; // Chave única para o localStorage
+    const [taskItems, setTaskItems] = useState(() => {
+      const savedItems = localStorage.getItem(localStorageKey);
+      return savedItems
+        ? JSON.parse(savedItems)
+        : [{ id: 1, status: "active" }];
+    });
     const [elementCount, setElementCount] = useState(0);
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
@@ -23,16 +29,9 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
       setElementCount(ElementRef?.current?.childNodes.length - 1);
     }, [elementCount, taskItems]);
 
-    quantity = role === "extraIncome" ? 4 : role === "networking" ? 3 : 2;
-
     useEffect(() => {
-      const newTaskItems = [...taskItems];
-      for (let index = 0; index < quantity; index++) {
-        newTaskItems.push({ id: index + index, status: "active" });
-      }
-      setTaskItems(newTaskItems);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [quantity]);
+      localStorage.setItem(localStorageKey, JSON.stringify(taskItems));
+    }, [taskItems, localStorageKey]);
 
     const handleItemComplete = (itemId) => {
       const updatedItems = taskItems.map((item) => {
