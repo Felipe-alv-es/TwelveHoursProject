@@ -9,9 +9,9 @@ import {
 } from "./Home.styles.ts";
 import { TaskGroupProps } from "../TaskGroup/TaskGroup.types.ts";
 import TaskGroup from "../TaskGroup/TaskGroup.tsx";
-import { TbHelpCircle } from "react-icons/tb";
 import { pagesContent } from "../../assets/utils/helpContent.ts";
 import { FaExchangeAlt } from "react-icons/fa";
+import { IoMdHelp } from "react-icons/io";
 
 const Home = () => {
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -38,7 +38,7 @@ const Home = () => {
         </IconButton>
         <Typography sx={getTitleStyle()}>Técnica das 12 Horas</Typography>
         <IconButton sx={getButtonIconStyle()} onClick={handleOpen}>
-          <TbHelpCircle />
+          <IoMdHelp />
         </IconButton>
       </Box>
       <Typography sx={getSubtitleStyle()}>

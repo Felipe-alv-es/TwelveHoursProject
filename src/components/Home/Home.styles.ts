@@ -17,10 +17,13 @@ export const getSubtitleStyle = (): SxProps => ({
 
 export const getButtonIconStyle = (): SxProps => ({
   position: "absolute",
-  right: 5,
+  right: "10%",
+  borderWidth: "5px",
+  borderStyle: "solid",
+  borderColor: "#FFFFF7",
   "> svg": {
-    height: "48px",
-    width: "48px",
+    height: "24px",
+    width: "24px",
     color: "#FFFFF7",
   },
 });
