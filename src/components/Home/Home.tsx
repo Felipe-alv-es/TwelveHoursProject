@@ -3,23 +3,23 @@ import { Box, IconButton, Typography, Modal, Button } from "@mui/material";
 import {
   getTitleStyle,
   getSubtitleStyle,
-  getButtonIconStyle,
   getModalStyle,
-  getChangeButtonStyle,
+  getButtonsContainerStyle,
 } from "./Home.styles.ts";
 import { TaskGroupProps } from "../TaskGroup/TaskGroup.types.ts";
 import TaskGroup from "../TaskGroup/TaskGroup.tsx";
 import { pagesContent } from "../../assets/utils/helpContent.ts";
 import { FaExchangeAlt } from "react-icons/fa";
-import { IoMdHelp } from "react-icons/io";
+import { IoMdHelp, IoMdRefresh } from "react-icons/io";
 
 const Home = () => {
   const [modalOpen, setModalOpen] = React.useState(false);
   const handleOpen = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
-  const [clicked, setClicked] = useState(
-    () => localStorage.getItem("clicked") || "Hour"
-  );
+  const [clicked, setClicked] = useState(() => {
+    const storedClicked = localStorage.getItem("clicked");
+    return storedClicked !== null ? storedClicked : "Hour";
+  });
 
   useEffect(() => {
     localStorage.setItem("clicked", clicked);
@@ -30,16 +30,55 @@ const Home = () => {
     window.location.reload();
   };
 
+  const handleDataUpdateStatus = () => {
+    for (let i = 0; i < localStorage.length; i++) {
+      const itemKey = localStorage.key(i);
+
+      if (itemKey !== null) {
+        if (itemKey !== "clicked") {
+          const savedDataString = localStorage.getItem(itemKey);
+
+          if (savedDataString) {
+            try {
+              const savedData = JSON.parse(savedDataString);
+
+              if (Array.isArray(savedData)) {
+                savedData.forEach((item: any) => {
+                  if (item.hasOwnProperty("status")) {
+                    item.status = "active";
+                  }
+                });
+
+                localStorage.setItem(itemKey, JSON.stringify(savedData));
+              }
+            } catch (error) {
+              console.error(
+                `Erro ao processar os dados do localStorage para a chave "${itemKey}":`,
+                error
+              );
+            }
+          }
+        }
+      }
+    }
+    window.location.reload();
+  };
+
   return (
     <Box>
       <Box sx={{ display: "grid", placeItems: "center" }}>
-        <IconButton sx={getChangeButtonStyle()} onClick={handleClick}>
-          <FaExchangeAlt />
-        </IconButton>
+        <Box sx={getButtonsContainerStyle()}>
+          <IconButton onClick={handleDataUpdateStatus}>
+            <IoMdRefresh />
+          </IconButton>
+          <IconButton onClick={handleClick}>
+            <FaExchangeAlt />
+          </IconButton>
+          <IconButton onClick={handleOpen}>
+            <IoMdHelp />
+          </IconButton>
+        </Box>
         <Typography sx={getTitleStyle()}>Técnica das 12 Horas</Typography>
-        <IconButton sx={getButtonIconStyle()} onClick={handleOpen}>
-          <IoMdHelp />
-        </IconButton>
       </Box>
       <Typography sx={getSubtitleStyle()}>
         {"Se organize | Faça conexões | Desenvolva seu profissional"}
