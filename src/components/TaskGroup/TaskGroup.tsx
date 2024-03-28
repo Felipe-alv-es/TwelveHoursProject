@@ -55,8 +55,6 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
       setTaskItems(updatedItems);
     };
 
-    console.log(taskItems[0].status);
-
     const handleAddItem = () => {
       if (taskItems.length > 9) {
         setOpenSnackbar(true);

@@ -13,9 +13,8 @@ import { FcAlarmClock } from "react-icons/fc";
 import { IoClose } from "react-icons/io5";
 
 const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
-  ({ role, onLocked, onComplete, ...props }, ref) => {
+  ({ role, onLocked, state, onComplete, ...props }, ref) => {
     const [seconds, setSeconds] = useState(10);
-    const [state, setState] = useState("active");
     const [timerStarted, setTimerStarted] = useState(false);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const [modalOpen, setModalOpen] = React.useState(false);
@@ -24,7 +23,6 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
 
     useEffect(() => {
       if (seconds === 0 && state !== "finished") {
-        setState("finished");
         handleOpen();
         onComplete();
       }
