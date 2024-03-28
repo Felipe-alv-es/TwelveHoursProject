@@ -13,9 +13,10 @@ import { FcAlarmClock } from "react-icons/fc";
 import { IoClose } from "react-icons/io5";
 
 const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
-  ({ role, onLocked, onComplete, ...props }, ref) => {
-    const [seconds, setSeconds] = useState(10);
-    const [state, setState] = useState("active");
+  ({ role, onLocked, state, variant, onComplete, ...props }, ref) => {
+    const [seconds, setSeconds] = useState(
+      variant === "Hour" ? 3600 : variant === "HalfHour" ? 5 : 3600
+    );
     const [timerStarted, setTimerStarted] = useState(false);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const [modalOpen, setModalOpen] = React.useState(false);
@@ -24,7 +25,6 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
 
     useEffect(() => {
       if (seconds === 0 && state !== "finished") {
-        setState("finished");
         handleOpen();
         onComplete();
       }
@@ -68,8 +68,6 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
     const getIcon = () => {
       if (!onLocked && state !== "finished") {
         return timerStarted ? <PiPauseCircleFill /> : <PiPlayCircleFill />;
-      } else if (seconds === 10 && !onLocked && state !== "finished") {
-        return <PiPlayCircleFill />;
       }
     };
 

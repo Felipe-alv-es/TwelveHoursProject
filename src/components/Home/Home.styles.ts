@@ -15,13 +15,19 @@ export const getSubtitleStyle = (): SxProps => ({
   fontFamily: "Kanit",
 });
 
-export const getButtonIconStyle = (): SxProps => ({
+export const getButtonsContainerStyle = (): SxProps => ({
   position: "absolute",
-  right: 5,
-  "> svg": {
-    height: "48px",
-    width: "48px",
-    color: "#FFFFF7",
+  right: "10%",
+  "> button": {
+    borderWidth: "4px",
+    borderStyle: "solid",
+    borderColor: "#FFFFF7",
+    marginLeft: "4px",
+    "> svg": {
+      height: "24px",
+      width: "24px",
+      color: "#FFFFF7",
+    },
   },
 });
 

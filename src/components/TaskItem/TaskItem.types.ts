@@ -4,4 +4,5 @@ export interface TaskItemProps {
   onComplete: () => void;
   role?: string;
   seconds?: number;
+  variant?: "Hour" | "HalfHour";
 }
