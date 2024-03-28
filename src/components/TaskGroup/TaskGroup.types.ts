@@ -1,4 +1,4 @@
 export interface TaskGroupProps {
   role: string;
-  quantity?: number;
+  variant?: "Hour" | "HalfHour";
 }

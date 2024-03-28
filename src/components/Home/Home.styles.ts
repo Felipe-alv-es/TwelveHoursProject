@@ -25,6 +25,19 @@ export const getButtonIconStyle = (): SxProps => ({
   },
 });
 
+export const getChangeButtonStyle = (): SxProps => ({
+  position: "absolute",
+  left: "10%",
+  borderWidth: "5px",
+  borderStyle: "solid",
+  borderColor: "#FFFFF7",
+  "> svg": {
+    height: "24px",
+    width: "24px",
+    color: "#FFFFF7",
+  },
+});
+
 export const getModalStyle = (): SxProps => ({
   background: "white",
   margin: "5% 10% 5% 10%",

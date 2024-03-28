@@ -11,7 +11,7 @@ import AddButton from "../AddButton/AddButton.tsx";
 import Alarm03 from "../../assets/audio/Alarm03.wav";
 
 const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
-  ({ role, quantity = 0 }, ref) => {
+  ({ role, variant }, ref) => {
     const localStorageKey = `${role}_taskItems`;
     const [taskItems, setTaskItems] = useState(() => {
       const savedItems = localStorage.getItem(localStorageKey);
@@ -90,6 +90,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
               state={task.status}
               onLocked={onLocked}
               role={role}
+              variant={variant}
               onComplete={() => handleItemComplete(task.id)}
             />
           );
