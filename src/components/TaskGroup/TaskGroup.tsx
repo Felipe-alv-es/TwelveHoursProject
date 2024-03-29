@@ -101,15 +101,23 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
 
     const selectTextColor = () => {
       if (
-        (role === "extraIncome" && elementCount > 5) ||
-        (role === "networking" && elementCount > 4) ||
-        (role === "requalification" && elementCount > 3)
+        variant === "Hour"
+          ? (role === "extraIncome" && elementCount > 5) ||
+            (role === "networking" && elementCount > 4) ||
+            (role === "requalification" && elementCount > 3)
+          : (role === "extraIncome" && elementCount > 10) ||
+            (role === "networking" && elementCount > 8) ||
+            (role === "requalification" && elementCount > 6)
       ) {
         return "#C62828";
       } else if (
-        (role === "extraIncome" && elementCount < 5) ||
-        (role === "networking" && elementCount < 4) ||
-        (role === "requalification" && elementCount < 3)
+        variant === "Hour"
+          ? (role === "extraIncome" && elementCount < 5) ||
+            (role === "networking" && elementCount < 4) ||
+            (role === "requalification" && elementCount < 3)
+          : (role === "extraIncome" && elementCount < 10) ||
+            (role === "networking" && elementCount < 8) ||
+            (role === "requalification" && elementCount < 6)
       ) {
         return "yellow";
       }
