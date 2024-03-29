@@ -7,7 +7,7 @@ export const pagesContent = [
     title4: "Network",
     title5: "Requalificação Profissional",
     text1:
-      "\n Reserve 5 horas para atividades que possam gerar uma renda extra. É crucial considerar que alcançar uma renda adicional significativa em um curto espaço de tempo pode ser extremamente desafiador, especialmente quando se está desempregado. Portanto, dedique esse tempo a atividades remuneradas, como trabalhar como entregador, vender produtos, prestar serviços como motorista de aplicativo, entre outras opções. \n\n",
+      "\n Você está desempregado e não está conseguindo uma re-colocação no mercado de trabalho ? Isso ocorre por diversos motivos, deste a falta de organização de tempo, até a errada priorização das atividades, e para isso, a tecnica das 12 horas poderá te ajudar! \n\n",
     text2:
       "\nUm dos maiores equívocos das pessoas é dedicar seu tempo exclusivamente a uma única tarefa, negligenciando outras prioridades, até que se vejam sem recursos e em desespero. Essa técnica visa corrigir essa abordagem.\n \nA técnica das 12 horas consiste em dividir seu tempo de forma desigual, dando mais atenção às áreas que demandam mais esforço, como a geração de uma renda extra, sem, no entanto, negligenciar outras prioridades, como o networking e a requalificação.\n\nVisando aprimorar o gasto do tempo preenchendo todos os requisitos, faremos uma distribuição de tempo da seguinte forma:\n\n",
     text3:

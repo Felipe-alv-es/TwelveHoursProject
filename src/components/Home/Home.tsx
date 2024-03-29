@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Box, IconButton, Typography, Modal, Button } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Typography,
+  Modal,
+  Button,
+  Tooltip,
+} from "@mui/material";
 import {
   getTitleStyle,
   getSubtitleStyle,
@@ -68,15 +75,21 @@ const Home = () => {
     <Box>
       <Box sx={{ display: "grid", placeItems: "center" }}>
         <Box sx={getButtonsContainerStyle()}>
-          <IconButton onClick={handleDataUpdateStatus}>
-            <IoMdRefresh />
-          </IconButton>
-          <IconButton onClick={handleClick}>
-            <FaExchangeAlt />
-          </IconButton>
-          <IconButton onClick={handleOpen}>
-            <IoMdHelp />
-          </IconButton>
+          <Tooltip title="Resetar Tempo">
+            <IconButton onClick={handleDataUpdateStatus}>
+              <IoMdRefresh />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Mudar variante">
+            <IconButton onClick={handleClick}>
+              <FaExchangeAlt />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Ajuda">
+            <IconButton onClick={handleOpen}>
+              <IoMdHelp />
+            </IconButton>
+          </Tooltip>
         </Box>
         <Typography sx={getTitleStyle()}>Técnica das 12 Horas</Typography>
       </Box>
