@@ -170,10 +170,10 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
                 }}
               >
                 {role === "extraIncome"
-                  ? `${elementCount}/5`
+                  ? `${elementCount}/${variant === "Hour" ? 5 : 10}`
                   : role === "networking"
-                  ? `${elementCount}/4`
-                  : `${elementCount}/3`}
+                  ? `${elementCount}/${variant === "Hour" ? 4 : 8}`
+                  : `${elementCount}/${variant === "Hour" ? 3 : 6}`}
               </StyledTypography>
               <IconButton
                 sx={{
