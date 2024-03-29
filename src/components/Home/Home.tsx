@@ -27,6 +27,9 @@ const Home = () => {
     const storedClicked = localStorage.getItem("clicked");
     return storedClicked !== null ? storedClicked : "Hour";
   });
+  const [completeExtra, setCompleteExtra] = useState(false);
+  const [completeNet, setCompleteNet] = useState(false);
+  const [completeReq, setCompleteReq] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("clicked", clicked);
@@ -36,6 +39,43 @@ const Home = () => {
     setClicked(clicked === "Hour" ? "HalfHour" : "Hour");
     window.location.reload();
   };
+
+  // AQUI ACHA RAPIDO
+
+  useEffect(() => {
+    const updateStatus = () => {
+      const extraIncome_taskItems = localStorage.getItem(
+        "extraIncome_taskItems"
+      );
+      const networking_taskItems = localStorage.getItem("networking_taskItems");
+      const requalification_taskItems = localStorage.getItem(
+        "requalification_taskItems"
+      );
+
+      if (
+        extraIncome_taskItems !== null &&
+        extraIncome_taskItems.includes("active")
+      ) {
+        setCompleteExtra(true);
+      }
+
+      if (
+        networking_taskItems !== null &&
+        networking_taskItems.includes("active")
+      ) {
+        setCompleteNet(true);
+      }
+
+      if (
+        requalification_taskItems !== null &&
+        requalification_taskItems.includes("active")
+      ) {
+        setCompleteReq(true);
+      }
+    };
+
+    updateStatus();
+  }, []);
 
   const handleDataUpdateStatus = () => {
     for (let i = 0; i < localStorage.length; i++) {
@@ -99,14 +139,17 @@ const Home = () => {
       <TaskGroup
         role="extraIncome"
         variant={clicked as TaskGroupProps["variant"]}
+        completed={completeExtra}
       />
       <TaskGroup
         role="networking"
         variant={clicked as TaskGroupProps["variant"]}
+        completed={completeNet}
       />
       <TaskGroup
         role="requalification"
         variant={clicked as TaskGroupProps["variant"]}
+        completed={completeReq}
       />
       <Modal open={modalOpen} onClose={handleClose}>
         <Box sx={getModalStyle()}>

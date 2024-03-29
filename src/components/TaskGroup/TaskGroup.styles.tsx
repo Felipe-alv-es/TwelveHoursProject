@@ -2,13 +2,16 @@ import React from "react";
 import { Typography, Paper } from "@mui/material";
 
 export const StyledContainer = (props) => {
+  const { completed, ...rest } = props;
   return (
     <Paper
       sx={{
         margin: "2% 10% 2% 10%",
         padding: "1.5%",
         borderRadius: "32px",
-        background: `linear-gradient(to right, #089CD4, #5DE2EE)`,
+        background: completed
+          ? `linear-gradient(to right, #089CD4, #5DE2EE)`
+          : "red",
         "> div:first-of-type": {
           justifyContent: "space-between",
           paddingRight: "1%",
@@ -18,7 +21,7 @@ export const StyledContainer = (props) => {
         },
       }}
       elevation={10}
-      {...props}
+      {...rest}
     />
   );
 };

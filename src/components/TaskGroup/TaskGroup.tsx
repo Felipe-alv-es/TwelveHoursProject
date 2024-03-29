@@ -12,7 +12,7 @@ import AddButton from "../AddButton/AddButton.tsx";
 import Alarm03 from "../../assets/audio/Alarm03.wav";
 
 const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
-  ({ role, variant }, ref) => {
+  ({ role, variant, completed, ...props }, ref) => {
     const localStorageKey = `${role}_taskItems`;
     const [taskItems, setTaskItems] = useState(() => {
       const savedItems = localStorage.getItem(localStorageKey);
@@ -126,7 +126,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
 
     return (
       <Box>
-        <StyledContainer>
+        <StyledContainer completed={completed}>
           <Box>
             <Box
               sx={{
