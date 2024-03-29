@@ -36,6 +36,9 @@ export const getModalStyle = (): SxProps => ({
   margin: "5% 10% 5% 10%",
   borderRadius: "16px",
   padding: "2%",
+  height: "80%",
+  display: "block",
+  overflow: "scroll",
   "> div:first-of-type": {
     display: "flex",
     justifyContent: "center",
@@ -49,8 +52,11 @@ export const getModalStyle = (): SxProps => ({
   "div:nth-of-type(2n)": {
     padding: "2% 10% 2% 10%",
     overflow: "scroll",
-    height: "350px",
+    height: "80%",
     marginBottom: "16px",
+    "@media(max-width: 1920px)": {
+      height: "70%",
+    },
     "> .title": {
       typography: "h5",
       fontWeight: "600",
