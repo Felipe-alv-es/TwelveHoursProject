@@ -23,10 +23,22 @@ export const getButtonsContainerStyle = (): SxProps => ({
     borderStyle: "solid",
     borderColor: "#FFFFF7",
     marginLeft: "4px",
+    ":hover": {
+      borderColor: "#D4D4CE",
+      animation: "floater 1.5s infinite",
+      transform: "translateY(-3%)",
+      "@keyframes floater": {
+        "0%": { transform: "translateY(-3%);transition: ease 0.5s" },
+        "50%": { transform: "translateY(3%);transition: ease 0.5s" },
+      },
+    },
     "> svg": {
       height: "24px",
       width: "24px",
       color: "#FFFFF7",
+      ":hover": {
+        color: "#D4D4CE",
+      },
     },
   },
 });
