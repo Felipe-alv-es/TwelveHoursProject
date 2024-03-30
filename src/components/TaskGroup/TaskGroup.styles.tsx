@@ -29,11 +29,11 @@ export const StyledContainer = (props) => {
 export const StyledTypography = (props) => {
   return (
     <Typography
-      variant="h6"
-      fontWeight="600"
+      fontWeight="800"
       fontFamily="Kanit"
       color="white"
       whiteSpace="nowrap"
+      fontSize="24px"
       sx={{ paddingBottom: "2%" }}
       {...props}
     />
@@ -106,8 +106,8 @@ export const taskGroupBackFace = (): SxProps => ({
         fontWeight: "600",
         fontFamily: "Kanit",
         background: "linear-gradient(to right, #B34684, #B3A446)",
-        "-webkit-background-clip": "text",
-        "-webkit-text-fill-color": "transparent",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
         fontSize: "20px",
         backgroundSize: "200% auto",
         animation: "floaterLetters 2s linear infinite",
