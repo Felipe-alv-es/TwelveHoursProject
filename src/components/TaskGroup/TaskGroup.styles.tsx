@@ -29,11 +29,11 @@ export const StyledContainer = (props) => {
 export const StyledTypography = (props) => {
   return (
     <Typography
-      variant="h6"
-      fontWeight="600"
+      fontWeight="800"
       fontFamily="Kanit"
       color="white"
       whiteSpace="nowrap"
+      fontSize="24px"
       sx={{ paddingBottom: "2%" }}
       {...props}
     />

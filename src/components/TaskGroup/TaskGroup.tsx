@@ -192,7 +192,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
           </Box>
           <Box ref={ElementRef}>{renderItems()} </Box>
         </StyledContainer>
-        <Box sx={taskGroupBackFace}>
+        <Box sx={taskGroupBackFace()}>
           <Box />
           <Box>
             <Box>
