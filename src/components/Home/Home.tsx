@@ -40,6 +40,8 @@ const Home = () => {
     window.location.reload();
   };
 
+  // console.log(TaskGroup.completed);
+
   const handleDataUpdateStatus = () => {
     for (let i = 0; i < localStorage.length; i++) {
       const itemKey = localStorage.key(i);
@@ -90,12 +92,26 @@ const Home = () => {
         localStorage.getItem("requalification_taskItems") || "[]"
       );
 
-      setCompleteExtra(areAllItemsCompleted(extraIncome_taskItems));
-      setCompleteNet(areAllItemsCompleted(networking_taskItems));
-      setCompleteReq(areAllItemsCompleted(requalification_taskItems));
+      const completeExtra = areAllItemsCompleted(extraIncome_taskItems);
+      const completeNet = areAllItemsCompleted(networking_taskItems);
+      const completeReq = areAllItemsCompleted(requalification_taskItems);
 
-      document.dispatchEvent(new Event("taskGroupCompletionStatusChanged"));
+      if (
+        completeExtra !== completeExtraState ||
+        completeNet !== completeNetState ||
+        completeReq !== completeReqState
+      ) {
+        setCompleteExtra(completeExtra);
+        setCompleteNet(completeNet);
+        setCompleteReq(completeReq);
+
+        document.dispatchEvent(new Event("taskGroupCompletionStatusChanged"));
+      }
     };
+
+    const completeExtraState = completeExtra;
+    const completeNetState = completeNet;
+    const completeReqState = completeReq;
 
     updateStatus();
     document.addEventListener("taskGroupCompletionStatusChanged", updateStatus);
@@ -106,7 +122,7 @@ const Home = () => {
         updateStatus
       );
     };
-  }, []);
+  }, [completeExtra, completeNet, completeReq]);
 
   return (
     <Box>
