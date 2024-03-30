@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Box, IconButton, Snackbar } from "@mui/material";
+import { Box, IconButton, Snackbar, Typography } from "@mui/material";
 import {
   StyledTypography,
   StyledContainer,
   StyledSubtitle,
+  taskGroupBackFace,
+  getSwipeAnimation,
 } from "./TaskGroup.styles.tsx";
 import TaskItem from "../TaskItem/TaskItem.tsx";
 import { TaskGroupProps } from "./TaskGroup.types.ts";
@@ -12,7 +14,7 @@ import AddButton from "../AddButton/AddButton.tsx";
 import Alarm03 from "../../assets/audio/Alarm03.wav";
 
 const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
-  ({ role, variant }, ref) => {
+  ({ role, variant, completed, ...props }, ref) => {
     const localStorageKey = `${role}_taskItems`;
     const [taskItems, setTaskItems] = useState(() => {
       const savedItems = localStorage.getItem(localStorageKey);
@@ -42,6 +44,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
 
     useEffect(() => {
       localStorage.setItem(localStorageKey, JSON.stringify(taskItems));
+      document.dispatchEvent(new Event("taskGroupCompletionStatusChanged"));
     }, [taskItems, localStorageKey]);
 
     const handleItemComplete = (itemId: any) => {
@@ -69,7 +72,8 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
     };
 
     const handleRemoveItem = () => {
-      if (taskItems.length === 0) {
+      if (taskItems.length < 2) {
+        setOpenSnackbar(true);
         return;
       }
       const updatedTaskItems = [...taskItems];
@@ -125,8 +129,8 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
     };
 
     return (
-      <Box>
-        <StyledContainer>
+      <Box sx={getSwipeAnimation(completed)}>
+        <StyledContainer completed={completed} {...props}>
           <Box>
             <Box
               sx={{
@@ -188,10 +192,25 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
           </Box>
           <Box ref={ElementRef}>{renderItems()} </Box>
         </StyledContainer>
+        <Box sx={taskGroupBackFace}>
+          <Box />
+          <Box>
+            <Box>
+              <Typography>
+                {role === "extraIncome"
+                  ? "Renda Extra"
+                  : role === "networking"
+                  ? "Networking"
+                  : "Requalificação"}
+              </Typography>
+              <Typography>Completo</Typography>
+            </Box>
+          </Box>
+        </Box>
         <Snackbar
           open={openSnackbar}
           autoHideDuration={2000}
-          message="Limite de Itens atingido"
+          message="Limite Maximo ou Minimo de itens atingido"
           onClose={() => setOpenSnackbar(false)}
         />
         <audio src={Alarm03} ref={audioRef} />

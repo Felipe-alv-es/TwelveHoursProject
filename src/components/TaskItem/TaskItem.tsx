@@ -15,7 +15,7 @@ import { IoClose } from "react-icons/io5";
 const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
   ({ role, onLocked, state, variant, onComplete, ...props }, ref) => {
     const [seconds, setSeconds] = useState(
-      variant === "Hour" ? 3600 : variant === "HalfHour" ? 1800 : 3600
+      variant === "Hour" ? 5 : variant === "HalfHour" ? 1800 : 3600
     );
     const [timerStarted, setTimerStarted] = useState(false);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
