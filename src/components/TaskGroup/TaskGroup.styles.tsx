@@ -1,6 +1,7 @@
 import React from "react";
 import { Typography, Paper } from "@mui/material";
 import { TaskGroupProps } from "./TaskGroup.types";
+import { SxProps } from "@mui/material/";
 
 export const StyledContainer = (props) => {
   const { completed, ...rest } = props;
@@ -29,7 +30,7 @@ export const StyledTypography = (props) => {
   return (
     <Typography
       variant="h6"
-      fontWeight="500"
+      fontWeight="600"
       fontFamily="Kanit"
       color="white"
       whiteSpace="nowrap"
@@ -56,8 +57,7 @@ export const StyledSubtitle = (props) => {
   );
 };
 
-export const taskGroupBackFace = () => ({
-  background: "green",
+export const taskGroupBackFace = (): SxProps => ({
   position: "absolute",
   width: "80%",
   height: "100%",
@@ -65,8 +65,59 @@ export const taskGroupBackFace = () => ({
   borderRadius: "32px",
   backfaceVisibility: "visible",
   transform: "rotateX(180deg)",
+  overflow: "hidden",
   zIndex: "-1",
   top: 0,
+  background: "linear-gradient(to right, #B34684, #B3A446)",
+  animation: "floaterLetters 10s linear infinite",
+  backgroundSize: "200% auto",
+  "> div:first-of-type": {
+    background: "#123357",
+    width: "32%",
+    height: "80%",
+    position: "absolute",
+    transform: "skew(20deg)",
+    bottom: -1,
+  },
+  "div:nth-of-type(2n)": {
+    background: "#FFFFF7",
+    width: "30%",
+    height: "100%",
+    marginLeft: "-2.5%",
+    transform: "skew(20deg)",
+    display: "grid",
+    placeItems: "center",
+    gap: "0%",
+    "> div": {
+      height: "100%",
+      width: "100%",
+      transform: "skew(-20deg)",
+      textAlign: "center",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      "> p:first-of-type": {
+        fontWeight: "800",
+        fontFamily: "Kanit",
+        fontSize: "28px",
+        textTransform: "uppercase",
+      },
+      ">p": {
+        fontWeight: "600",
+        fontFamily: "Kanit",
+        background: "linear-gradient(to right, #B34684, #B3A446)",
+        "-webkit-background-clip": "text",
+        "-webkit-text-fill-color": "transparent",
+        fontSize: "20px",
+        backgroundSize: "200% auto",
+        animation: "floaterLetters 2s linear infinite",
+      },
+      "@keyframes floaterLetters": {
+        "0%": { backgroundPosition: "0% 50%" },
+        "50%": { backgroundPosition: "100% 50%" },
+      },
+    },
+  },
 });
 
 export const getSwipeAnimation = (completed: TaskGroupProps["completed"]) => ({

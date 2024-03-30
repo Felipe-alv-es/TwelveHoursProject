@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Box, IconButton, Snackbar } from "@mui/material";
+import { Box, IconButton, Snackbar, Typography } from "@mui/material";
 import {
   StyledTypography,
   StyledContainer,
@@ -72,7 +72,8 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
     };
 
     const handleRemoveItem = () => {
-      if (taskItems.length === 0) {
+      if (taskItems.length < 2) {
+        setOpenSnackbar(true);
         return;
       }
       const updatedTaskItems = [...taskItems];
@@ -191,11 +192,25 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
           </Box>
           <Box ref={ElementRef}>{renderItems()} </Box>
         </StyledContainer>
-        <Box sx={taskGroupBackFace} />
+        <Box sx={taskGroupBackFace}>
+          <Box />
+          <Box>
+            <Box>
+              <Typography>
+                {role === "extraIncome"
+                  ? "Renda Extra"
+                  : role === "networking"
+                  ? "Networking"
+                  : "Requalificação"}
+              </Typography>
+              <Typography>Completo</Typography>
+            </Box>
+          </Box>
+        </Box>
         <Snackbar
           open={openSnackbar}
           autoHideDuration={2000}
-          message="Limite de Itens atingido"
+          message="Limite Maximo ou Minimo de itens atingido"
           onClose={() => setOpenSnackbar(false)}
         />
         <audio src={Alarm03} ref={audioRef} />
