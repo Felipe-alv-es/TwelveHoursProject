@@ -4,6 +4,8 @@ import {
   StyledTypography,
   StyledContainer,
   StyledSubtitle,
+  taskGroupBackFace,
+  getSwipeAnimation,
 } from "./TaskGroup.styles.tsx";
 import TaskItem from "../TaskItem/TaskItem.tsx";
 import { TaskGroupProps } from "./TaskGroup.types.ts";
@@ -126,7 +128,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
     };
 
     return (
-      <Box>
+      <Box sx={getSwipeAnimation(completed)}>
         <StyledContainer completed={completed} {...props}>
           <Box>
             <Box
@@ -189,6 +191,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
           </Box>
           <Box ref={ElementRef}>{renderItems()} </Box>
         </StyledContainer>
+        <Box sx={taskGroupBackFace} />
         <Snackbar
           open={openSnackbar}
           autoHideDuration={2000}
