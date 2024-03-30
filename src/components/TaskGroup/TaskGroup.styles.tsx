@@ -10,8 +10,8 @@ export const StyledContainer = (props) => {
         padding: "1.5%",
         borderRadius: "32px",
         background: completed
-          ? `linear-gradient(to right, #089CD4, #5DE2EE)`
-          : "red",
+          ? "coral"
+          : `linear-gradient(to right, #089CD4, #5DE2EE)`,
         "> div:first-of-type": {
           justifyContent: "space-between",
           paddingRight: "1%",

@@ -40,43 +40,6 @@ const Home = () => {
     window.location.reload();
   };
 
-  // AQUI ACHA RAPIDO
-
-  useEffect(() => {
-    const updateStatus = () => {
-      const extraIncome_taskItems = localStorage.getItem(
-        "extraIncome_taskItems"
-      );
-      const networking_taskItems = localStorage.getItem("networking_taskItems");
-      const requalification_taskItems = localStorage.getItem(
-        "requalification_taskItems"
-      );
-
-      if (
-        extraIncome_taskItems !== null &&
-        extraIncome_taskItems.includes("active")
-      ) {
-        setCompleteExtra(true);
-      }
-
-      if (
-        networking_taskItems !== null &&
-        networking_taskItems.includes("active")
-      ) {
-        setCompleteNet(true);
-      }
-
-      if (
-        requalification_taskItems !== null &&
-        requalification_taskItems.includes("active")
-      ) {
-        setCompleteReq(true);
-      }
-    };
-
-    updateStatus();
-  }, []);
-
   const handleDataUpdateStatus = () => {
     for (let i = 0; i < localStorage.length; i++) {
       const itemKey = localStorage.key(i);
@@ -110,6 +73,40 @@ const Home = () => {
     }
     window.location.reload();
   };
+
+  const areAllItemsCompleted = (taskItems) => {
+    return taskItems.every((item) => item.status === "finished");
+  };
+
+  useEffect(() => {
+    const updateStatus = () => {
+      const extraIncome_taskItems = JSON.parse(
+        localStorage.getItem("extraIncome_taskItems") || "[]"
+      );
+      const networking_taskItems = JSON.parse(
+        localStorage.getItem("networking_taskItems") || "[]"
+      );
+      const requalification_taskItems = JSON.parse(
+        localStorage.getItem("requalification_taskItems") || "[]"
+      );
+
+      setCompleteExtra(areAllItemsCompleted(extraIncome_taskItems));
+      setCompleteNet(areAllItemsCompleted(networking_taskItems));
+      setCompleteReq(areAllItemsCompleted(requalification_taskItems));
+
+      document.dispatchEvent(new Event("taskGroupCompletionStatusChanged"));
+    };
+
+    updateStatus();
+    document.addEventListener("taskGroupCompletionStatusChanged", updateStatus);
+
+    return () => {
+      document.removeEventListener(
+        "taskGroupCompletionStatusChanged",
+        updateStatus
+      );
+    };
+  }, []);
 
   return (
     <Box>

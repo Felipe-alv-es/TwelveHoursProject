@@ -42,6 +42,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
 
     useEffect(() => {
       localStorage.setItem(localStorageKey, JSON.stringify(taskItems));
+      document.dispatchEvent(new Event("taskGroupCompletionStatusChanged"));
     }, [taskItems, localStorageKey]);
 
     const handleItemComplete = (itemId: any) => {
@@ -126,7 +127,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
 
     return (
       <Box>
-        <StyledContainer completed={completed}>
+        <StyledContainer completed={completed} {...props}>
           <Box>
             <Box
               sx={{
