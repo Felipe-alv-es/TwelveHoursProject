@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Box, IconButton, Snackbar, Typography } from "@mui/material";
 import {
-  StyledTypography,
   StyledContainer,
-  StyledSubtitle,
   taskGroupBackFace,
   getSwipeAnimation,
+  getItemContainerStyle,
+  getMenuCounterStyle,
 } from "./TaskGroup.styles.tsx";
 import TaskItem from "../TaskItem/TaskItem.tsx";
 import { TaskGroupProps } from "./TaskGroup.types.ts";
@@ -81,28 +81,28 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
       setTaskItems(updatedTaskItems);
     };
 
-    const renderItems = () => {
-      return taskItems.map(
-        (
-          task: { id: React.Key | null | undefined; status: string },
-          index: number
-        ) => {
-          const onLocked =
-            index > 0 && taskItems[index - 1].status === "active";
-          return (
-            <TaskItem
-              key={task.id}
-              state={task.status}
-              onLocked={onLocked}
-              role={role}
-              variant={variant}
-              onComplete={() => handleItemComplete(task.id)}
-            />
-          );
-        }
-      );
+    const getRoleText = () => {
+      switch (role) {
+        case "extraIncome":
+          return "Renda Extra";
+        case "networking":
+          return "Networking";
+        default:
+          return "Requalification";
+      }
     };
 
+    const selectTextCount = () => {
+      if (role === "extraIncome") {
+        return variant === "Hour" ? "5" : "10";
+      } else if (role === "networking") {
+        return variant === "Hour" ? "4" : "8";
+      } else {
+        return variant === "Hour" ? "3" : "6";
+      }
+    };
+
+    // Otimizar essa const aq
     const selectTextColor = () => {
       if (
         variant === "Hour"
@@ -128,83 +128,55 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
       return "white";
     };
 
+    const renderItems = () => {
+      return taskItems.map(
+        (
+          task: { id: React.Key | null | undefined; status: string },
+          index: number
+        ) => {
+          const onLocked =
+            index > 0 && taskItems[index - 1].status === "active";
+          return (
+            <TaskItem
+              key={task.id}
+              state={task.status}
+              onLocked={onLocked}
+              role={role}
+              variant={variant}
+              onComplete={() => handleItemComplete(task.id)}
+            />
+          );
+        }
+      );
+    };
+
     return (
       <Box sx={getSwipeAnimation(completed)}>
-        <StyledContainer completed={completed} {...props}>
-          <Box>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <StyledTypography>
-                {role === "extraIncome"
-                  ? "Renda Extra"
-                  : role === "networking"
-                  ? "Networking"
-                  : "Requalificação"}
-              </StyledTypography>
-              <StyledSubtitle>
-                {role === "extraIncome"
-                  ? "Explore novas oportunidades para aumentar sua renda"
-                  : role === "networking"
-                  ? "Construa conexões sólidas para impulsionar seu sucesso"
-                  : "Investir em requalificação é o caminho para evoluir profissionalmente"}
-              </StyledSubtitle>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <IconButton
-                sx={{
-                  alignItems: "center",
-                  height: "fit-content",
-                }}
-                onClick={() => handleRemoveItem()}
-              >
-                <AddButton minus />
-              </IconButton>
-              <StyledTypography
-                sx={{
-                  color: selectTextColor(),
-                }}
-              >
-                {role === "extraIncome"
-                  ? `${elementCount}/${variant === "Hour" ? 5 : 10}`
-                  : role === "networking"
-                  ? `${elementCount}/${variant === "Hour" ? 4 : 8}`
-                  : `${elementCount}/${variant === "Hour" ? 3 : 6}`}
-              </StyledTypography>
-              <IconButton
-                sx={{
-                  alignItems: "center",
-                  height: "fit-content",
-                }}
-                onClick={() => handleAddItem()}
-              >
-                <AddButton />
-              </IconButton>
-            </Box>
+        <StyledContainer {...props}>
+          <Box className="style-artifact" />
+          <Box className="style-white-box">
+            <Typography>{getRoleText()}</Typography>
+            <Typography>Em Progresso</Typography>
           </Box>
-          <Box ref={ElementRef}>{renderItems()} </Box>
+          <Box sx={getItemContainerStyle()} ref={ElementRef}>
+            {renderItems()}
+          </Box>
+          <Box sx={getMenuCounterStyle(selectTextColor)}>
+            <IconButton onClick={handleRemoveItem}>
+              <AddButton minus />
+            </IconButton>
+            <Typography>{`${elementCount}/${selectTextCount()}`}</Typography>
+            <IconButton onClick={handleAddItem}>
+              <AddButton />
+            </IconButton>
+          </Box>
         </StyledContainer>
+
         <Box sx={taskGroupBackFace()}>
           <Box />
           <Box>
-            <Box>
-              <Typography>
-                {role === "extraIncome"
-                  ? "Renda Extra"
-                  : role === "networking"
-                  ? "Networking"
-                  : "Requalificação"}
-              </Typography>
-              <Typography>Completo</Typography>
-            </Box>
+            <Typography>{getRoleText()}</Typography>
+            <Typography>Completo</Typography>
           </Box>
         </Box>
         <Snackbar

@@ -1,61 +1,77 @@
 import React from "react";
-import { Typography, Paper } from "@mui/material";
+import { Paper } from "@mui/material";
 import { TaskGroupProps } from "./TaskGroup.types";
 import { SxProps } from "@mui/material/";
 
 export const StyledContainer = (props) => {
-  const { completed, ...rest } = props;
   return (
     <Paper
       sx={{
         margin: "2% 10% 2% 10%",
-        padding: "1.5%",
         borderRadius: "32px",
-        background: `linear-gradient(to right, #089CD4, #5DE2EE)`,
-        "> div:first-of-type": {
-          justifyContent: "space-between",
-          paddingRight: "1%",
+        background: "linear-gradient(to right, #B34684, #B3A446)",
+        position: "relative",
+        overflow: "hidden",
+        display: "flex",
+        "> .style-artifact": {
+          background: "#123357",
+          width: "32%",
+          height: "60%",
+          position: "absolute",
+          transform: "skew(20deg)",
+          bottom: -1,
         },
-        "> div": {
-          display: "flex",
+        ".style-white-box": {
+          background: "#FFFFF7",
+          width: "35%",
+          marginLeft: "-3%",
+          transform: "skew(20deg)",
+          display: "grid",
+          placeItems: "center",
+          padding: "2%",
+          ">p": {
+            fontWeight: "600",
+            fontFamily: "Kanit",
+            fontSize: "20px",
+            transform: "skew(-20deg)",
+            background: "linear-gradient(to right, #B34684, #B3A446)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundSize: "200% auto",
+            animation: "changeColorLetters 2s linear infinite",
+          },
+          "> p:first-of-type": {
+            fontWeight: "800",
+            fontSize: "28px",
+            textTransform: "uppercase",
+          },
         },
       }}
       elevation={10}
-      {...rest}
-    />
-  );
-};
-
-export const StyledTypography = (props) => {
-  return (
-    <Typography
-      fontWeight="800"
-      fontFamily="Kanit"
-      color="white"
-      whiteSpace="nowrap"
-      fontSize="24px"
-      sx={{ paddingBottom: "2%" }}
       {...props}
     />
   );
 };
 
-export const StyledSubtitle = (props) => {
-  return (
-    <Typography
-      variant="body2"
-      fontWeight="300"
-      fontFamily="Kanit"
-      paddingLeft="3%"
-      whiteSpace="nowrap"
-      paddingBottom="1.2%"
-      alignSelf="center"
-      color="white"
-      fontStyle="italic"
-      {...props}
-    />
-  );
-};
+export const getItemContainerStyle = (): SxProps => ({
+  display: "flex",
+  width: "65%",
+  padding: " 2% 2% 2% 2%",
+  justifyContent: "center",
+});
+
+export const getMenuCounterStyle = (textColor): SxProps => ({
+  display: "flex",
+  right: 20,
+  position: "absolute",
+  alignItems: "center",
+  "> p": {
+    fontWeight: "600",
+    fontFamily: "Kanit",
+    fontSize: "20px",
+    color: textColor,
+  },
+});
 
 export const taskGroupBackFace = (): SxProps => ({
   position: "absolute",
@@ -69,7 +85,7 @@ export const taskGroupBackFace = (): SxProps => ({
   zIndex: "-1",
   top: 0,
   background: "linear-gradient(to right, #B34684, #B3A446)",
-  animation: "floaterLetters 10s linear infinite",
+  animation: "changeColorLetters 10s linear infinite",
   backgroundSize: "200% auto",
   "> div:first-of-type": {
     background: "#123357",
@@ -110,9 +126,9 @@ export const taskGroupBackFace = (): SxProps => ({
         WebkitTextFillColor: "transparent",
         fontSize: "20px",
         backgroundSize: "200% auto",
-        animation: "floaterLetters 2s linear infinite",
+        animation: "changeColorLetters 2s linear infinite",
       },
-      "@keyframes floaterLetters": {
+      "@keyframes changeColorLetters": {
         "0%": { backgroundPosition: "0% 50%" },
         "50%": { backgroundPosition: "100% 50%" },
       },
@@ -128,3 +144,11 @@ export const getSwipeAnimation = (completed: TaskGroupProps["completed"]) => ({
   perspective: "1000px",
   transform: completed ? "rotateX(180deg)" : "none",
 });
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const animationDepot = {
+  "@keyframes changeColorLetters": {
+    "0%": { backgroundPosition: "0% 50%" },
+    "50%": { backgroundPosition: "100% 50%" },
+  },
+};
