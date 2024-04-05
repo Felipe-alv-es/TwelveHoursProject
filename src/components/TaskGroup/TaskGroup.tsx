@@ -159,7 +159,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
 
     return (
       <Box>
-        <StyledContainer {...props}>
+        <StyledContainer completed {...props}>
           <Box className="style-artifact" />
           <Box sx={whiteBoxStyle(completed)}>
             <Box>
