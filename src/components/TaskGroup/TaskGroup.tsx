@@ -14,7 +14,11 @@ import AddButton from "../AddButton/AddButton.tsx";
 // @ts-ignore
 import Alarm03 from "../../assets/audio/Alarm03.wav";
 import { LuLock } from "react-icons/lu";
+import { FaMoneyBillWave } from "react-icons/fa";
 import { IoMdHelp, IoMdRefresh } from "react-icons/io";
+import { IoPlanet } from "react-icons/io5";
+import { BsCashCoin } from "react-icons/bs";
+import { BsClockHistory } from "react-icons/bs";
 
 const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
   ({ role, variant, completed, ...props }, ref) => {
@@ -180,13 +184,13 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
             </Box>
             <Box sx={taskGroupBackFace(role)}>
               <LuLock className="svg-item" size={"32px"} />
-              <LuLock className="svg-item" size={"32px"} />
+              <FaMoneyBillWave className="svg-item" size={"32px"} />
               <IoMdHelp className="svg-item" size={"32px"} />
               <Typography>{`${getRoleText()} Concluido!`}</Typography>
-              <IoMdHelp className="svg-item" size={"32px"} />
               <IoMdRefresh className="svg-item" size={"32px"} />
-              <IoMdRefresh className="svg-item" size={"32px"} />
-              <IoMdRefresh className="svg-item" size={"32px"} />
+              <IoPlanet className="svg-item" size={"32px"} />
+              <BsCashCoin className="svg-item" size={"32px"} />
+              <BsClockHistory className="svg-item" size={"32px"} />
             </Box>
           </Box>
         </StyledContainer>
