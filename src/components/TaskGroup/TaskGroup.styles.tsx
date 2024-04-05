@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Paper } from "@mui/material";
 import { TaskGroupProps } from "./TaskGroup.types";
 import { SxProps } from "@mui/material/";
+import tinycolor from "tinycolor2";
 
 export const StyledContainer = (props) => {
   const { completed, ...rest } = props;
@@ -81,8 +82,7 @@ export const whiteBoxStyle = (
         WebkitTextFillColor: "transparent",
         WebkitBackgroundClip: "text",
         transition: "2s",
-        // backgroundImage: novaCor,
-        backgroundImage: `linear-gradient(0deg, ${novaCor} 70%, lightGreen 70%)`,
+        backgroundImage: `linear-gradient(0deg, ${gradientColor} 70%, lightGreen 70%)`,
         backgroundSize: "100% 290%",
         WebkitBackgroundSize: completed ? useBackgroundTimer : "",
       },
