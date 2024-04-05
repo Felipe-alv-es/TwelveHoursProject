@@ -35,18 +35,29 @@ export const StyledContainer = (props) => {
   );
 };
 
-const useBackgroundTimer = () => {
-  const [backgroundTimer, setBackgroundTimer] = useState("");
-
+const useTitleTimer = () => {
+  const [titleTimer, setTitleTimer] = useState("");
   useEffect(() => {
     const timerId = setTimeout(() => {
-      setBackgroundTimer("100% 90%");
+      setTitleTimer("100% 90%");
     }, 2000);
 
     return () => clearTimeout(timerId);
   }, []);
 
-  return backgroundTimer;
+  return titleTimer;
+};
+const useSubtitleTimer = () => {
+  const [subtitleTimer, setSubtitleTimer] = useState("");
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setSubtitleTimer("100% 90%");
+    }, 1000);
+
+    return () => clearTimeout(timerId);
+  }, []);
+
+  return subtitleTimer;
 };
 
 export const whiteBoxStyle = (
@@ -76,20 +87,23 @@ export const whiteBoxStyle = (
       textAlign: "center",
       position: "relative",
       "> p": {
-        fontWeight: "600",
-        fontFamily: "Kanit",
-        fontSize: "20px",
+        backgroundImage: `linear-gradient(0deg, ${gradientColor} 70%, lightGreen 70%)`,
         WebkitTextFillColor: "transparent",
         WebkitBackgroundClip: "text",
+        fontFamily: "Kanit",
         transition: "2s",
-        backgroundImage: `linear-gradient(0deg, ${gradientColor} 70%, lightGreen 70%)`,
         backgroundSize: "100% 290%",
-        WebkitBackgroundSize: completed ? useBackgroundTimer : "",
+      },
+      "> p:nth-of-type(2n)": {
+        fontWeight: "600",
+        fontSize: "20px",
+        WebkitBackgroundSize: completed ? useSubtitleTimer : "",
       },
       "> p:first-of-type": {
         fontWeight: "800",
         fontSize: "28px",
         textTransform: "uppercase",
+        WebkitBackgroundSize: completed ? useTitleTimer : "",
       },
     },
     "@keyframes changeWidth": {
