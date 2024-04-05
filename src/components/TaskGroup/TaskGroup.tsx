@@ -6,6 +6,7 @@ import {
   getSwipeAnimation,
   getItemContainerStyle,
   getMenuCounterStyle,
+  whiteBoxStyle,
 } from "./TaskGroup.styles.tsx";
 import TaskItem from "../TaskItem/TaskItem.tsx";
 import { TaskGroupProps } from "./TaskGroup.types.ts";
@@ -151,34 +152,34 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
     };
 
     return (
-      <Box sx={getSwipeAnimation(completed)}>
+      <Box>
         <StyledContainer {...props}>
           <Box className="style-artifact" />
-          <Box className="style-white-box">
-            <Typography>{getRoleText()}</Typography>
-            <Typography>Em Progresso</Typography>
+          <Box sx={whiteBoxStyle(completed)}>
+            <Box>
+              <Typography>{getRoleText()}</Typography>
+              <Typography>Em Progresso</Typography>
+            </Box>
           </Box>
-          <Box sx={getItemContainerStyle()} ref={ElementRef}>
-            {renderItems()}
-          </Box>
-          <Box sx={getMenuCounterStyle(selectTextColor)}>
-            <IconButton onClick={handleRemoveItem}>
-              <AddButton minus />
-            </IconButton>
-            <Typography>{`${elementCount}/${selectTextCount()}`}</Typography>
-            <IconButton onClick={handleAddItem}>
-              <AddButton />
-            </IconButton>
+          <Box sx={getSwipeAnimation(completed)}>
+            <Box sx={getItemContainerStyle()} ref={ElementRef}>
+              {renderItems()}
+            </Box>
+            <Box sx={getMenuCounterStyle(selectTextColor)}>
+              <IconButton onClick={handleRemoveItem}>
+                <AddButton minus />
+              </IconButton>
+              <Typography>{`${
+                elementCount + 1
+              }/${selectTextCount()}`}</Typography>
+              <IconButton onClick={handleAddItem}>
+                <AddButton />
+              </IconButton>
+            </Box>
+            <Box sx={taskGroupBackFace()}></Box>
           </Box>
         </StyledContainer>
 
-        <Box sx={taskGroupBackFace()}>
-          <Box />
-          <Box>
-            <Typography>{getRoleText()}</Typography>
-            <Typography>Completo</Typography>
-          </Box>
-        </Box>
         <Snackbar
           open={openSnackbar}
           autoHideDuration={2000}
