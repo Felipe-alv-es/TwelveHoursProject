@@ -130,18 +130,18 @@ export const taskGroupBackFace = (role): SxProps => ({
     },
     ":nth-of-type(2n)": {
       animation: `${
-        role === "networking" ? "moveRandom2" : "moveRandom3"
+        role === "networking" ? "moveRandom3" : "moveRandom4"
       } 15s linear infinite`,
       transform: "rotate(-10deg) translate(-200px) rotate(360deg)",
     },
     ":nth-of-type(3n)": {
       animation: `${
-        role === "requalification" ? "moveRandom3" : "moveRandom4"
+        role === "requalification" ? "moveRandom1" : "moveRandom4"
       } 15s linear infinite`,
       transform: "rotate(-10deg) translate(-200px) rotate(360deg)",
     },
     animation: `${
-      role === "extraIncome" ? "moveRandom4" : "moveRandom1"
+      role === "extraIncome" ? "moveRandom2" : "moveRandom3"
     } 15s linear infinite`,
     transform: "rotate(-10deg) translate(-200px) rotate(360deg)",
   },
