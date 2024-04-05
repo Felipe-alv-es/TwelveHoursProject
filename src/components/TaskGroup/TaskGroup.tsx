@@ -7,6 +7,7 @@ import {
   getItemContainerStyle,
   getMenuCounterStyle,
   whiteBoxStyle,
+  StyledSubtitle,
 } from "./TaskGroup.styles.tsx";
 import TaskItem from "../TaskItem/TaskItem.tsx";
 import { TaskGroupProps } from "./TaskGroup.types.ts";
@@ -164,7 +165,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
           <Box sx={whiteBoxStyle(completed)}>
             <Box>
               <Typography>{getRoleText()}</Typography>
-              <Typography>Em Progresso</Typography>
+              <StyledSubtitle completed={completed} />
             </Box>
           </Box>
           <Box sx={getSwipeAnimation(completed)}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Paper } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import { TaskGroupProps } from "./TaskGroup.types";
 import { SxProps } from "@mui/material/";
 import tinycolor from "tinycolor2";
@@ -47,6 +47,7 @@ const useTitleTimer = () => {
 
   return titleTimer;
 };
+
 const useSubtitleTimer = () => {
   const [subtitleTimer, setSubtitleTimer] = useState("");
   useEffect(() => {
@@ -72,7 +73,7 @@ export const whiteBoxStyle = (
 
   return {
     background: "#FFFFF7",
-    animation: completed ? "changeWidth 5s ease-in-out" : "",
+    animation: completed ? "changeWidth 6s ease-in-out" : "",
     width: "25%",
     transition: "3s",
     height: "100%",
@@ -95,15 +96,22 @@ export const whiteBoxStyle = (
         backgroundSize: "100% 290%",
       },
       "> p:nth-of-type(2n)": {
-        fontWeight: "600",
         fontSize: "20px",
+        fontWeight: "600",
         WebkitBackgroundSize: completed ? useSubtitleTimer : "",
+        animation: completed ? "popEffect 0.5s 2.4s ease-in-out" : "",
+        "@keyframes popEffect": {
+          "0%": { transform: "scale(1.00)" },
+          "50%": { transform: "scale(1.1)" },
+          "100%": { transform: "scale(1.00)" },
+        },
       },
       "> p:first-of-type": {
         fontWeight: "800",
         fontSize: "28px",
         textTransform: "uppercase",
         WebkitBackgroundSize: completed ? useTitleTimer : "",
+        animation: completed ? "popEffect 0.5s 3.4s ease-in-out" : "",
       },
     },
     "@keyframes changeWidth": {
@@ -246,3 +254,22 @@ export const getSwipeAnimation = (completed: TaskGroupProps["completed"]) => ({
   marginLeft: "15%",
   transition: "1s 2s",
 });
+
+export const StyledSubtitle = (props) => {
+  const { completed, ...rest } = props;
+
+  const [subtitleText, setSubtitleText] = useState("Em Progresso");
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setSubtitleText("Completo");
+    }, 2450);
+
+    return () => clearTimeout(timerId);
+  }, []);
+
+  return (
+    <Typography {...rest}>
+      {completed ? subtitleText : "Em Progresso"}
+    </Typography>
+  );
+};
