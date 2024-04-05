@@ -162,7 +162,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
       <Box>
         <StyledContainer completed {...props}>
           <Box className="style-artifact" />
-          <Box sx={whiteBoxStyle(completed)}>
+          <Box sx={whiteBoxStyle(completed, role)}>
             <Box>
               <Typography>{getRoleText()}</Typography>
               <StyledSubtitle completed={completed} />

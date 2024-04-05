@@ -62,18 +62,54 @@ const useSubtitleTimer = () => {
 };
 
 export const whiteBoxStyle = (
-  completed?: TaskGroupProps["completed"]
+  completed?: TaskGroupProps["completed"],
+  role?: TaskGroupProps["role"]
 ): SxProps => {
-  const gradientStartColor = "#B34684";
-  const gradientEndColor = "#B3A446";
+  const getFinishedDegrade = () => {
+    const gradientStartColor = "#B34684";
+    const gradientEndColor = "#B3A446";
 
-  const gradientColor = tinycolor
-    .mix(gradientStartColor, gradientEndColor, 50)
-    .toHexString();
+    const gradientColor = tinycolor
+      .mix(gradientStartColor, gradientEndColor, 50)
+      .toHexString();
+
+    return gradientColor;
+  };
+
+  const getRolesDegrade = () => {
+    if (role === "requalification") {
+      const gradientStartColor = "#414F7F";
+      const gradientEndColor = "#455588";
+
+      const gradientColor = tinycolor
+        .mix(gradientStartColor, gradientEndColor, 50)
+        .toHexString();
+
+      return gradientColor;
+    } else if (role === "networking") {
+      const gradientStartColor = "#389771";
+      const gradientEndColor = "#47C191";
+
+      const gradientColor = tinycolor
+        .mix(gradientStartColor, gradientEndColor, 50)
+        .toHexString();
+
+      return gradientColor;
+    } else {
+      const gradientStartColor = "#6F82C3";
+      const gradientEndColor = "#879eed";
+
+      const gradientColor = tinycolor
+        .mix(gradientStartColor, gradientEndColor, 50)
+        .toHexString();
+
+      return gradientColor;
+    }
+  };
 
   return {
     background: "#FFFFF7",
-    animation: completed ? "changeWidth 6s ease-in-out" : "",
+    animation: completed ? "changeWidth 5s ease-in-out" : "",
     width: "25%",
     transition: "3s",
     height: "100%",
@@ -88,18 +124,18 @@ export const whiteBoxStyle = (
       textAlign: "center",
       position: "relative",
       "> p": {
-        backgroundImage: `linear-gradient(0deg, ${gradientColor} 70%, lightGreen 70%)`,
+        backgroundImage: `linear-gradient(0deg, ${getFinishedDegrade()} 70%, ${getRolesDegrade()} 70%)`,
         WebkitTextFillColor: "transparent",
         WebkitBackgroundClip: "text",
         fontFamily: "Kanit",
-        transition: "2s",
+        transition: "1s",
         backgroundSize: "100% 290%",
       },
       "> p:nth-of-type(2n)": {
         fontSize: "20px",
         fontWeight: "600",
         WebkitBackgroundSize: completed ? useSubtitleTimer : "",
-        animation: completed ? "popEffect 0.5s 2.4s ease-in-out" : "",
+        animation: completed ? "popEffect 0.3s 1.8s ease-in-out" : "",
         "@keyframes popEffect": {
           "0%": { transform: "scale(1.00)" },
           "50%": { transform: "scale(1.1)" },
@@ -111,7 +147,7 @@ export const whiteBoxStyle = (
         fontSize: "28px",
         textTransform: "uppercase",
         WebkitBackgroundSize: completed ? useTitleTimer : "",
-        animation: completed ? "popEffect 0.5s 3.4s ease-in-out" : "",
+        animation: completed ? "popEffect 0.3s 2.8s ease-in-out" : "",
       },
     },
     "@keyframes changeWidth": {
@@ -258,18 +294,16 @@ export const getSwipeAnimation = (completed: TaskGroupProps["completed"]) => ({
 export const StyledSubtitle = (props) => {
   const { completed, ...rest } = props;
 
-  const [subtitleText, setSubtitleText] = useState("Em Progresso");
+  const [subtitleText, setSubtitleText] = useState("Incompleto");
   useEffect(() => {
     const timerId = setTimeout(() => {
       setSubtitleText("Completo");
-    }, 2450);
+    }, 1800);
 
     return () => clearTimeout(timerId);
   }, []);
 
   return (
-    <Typography {...rest}>
-      {completed ? subtitleText : "Em Progresso"}
-    </Typography>
+    <Typography {...rest}>{completed ? subtitleText : "Incompleto"}</Typography>
   );
 };
