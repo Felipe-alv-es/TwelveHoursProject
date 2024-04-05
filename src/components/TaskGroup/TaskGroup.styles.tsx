@@ -33,7 +33,9 @@ export const whiteBoxStyle = (
   completed?: TaskGroupProps["completed"]
 ): SxProps => ({
   background: "#FFFFF7",
-  width: completed ? "105%" : "35%",
+  animation: completed ? "changeWidth 5s ease-in-out" : "",
+  width: "35%",
+  transition: "3s",
   height: "100%",
   marginLeft: "-3%",
   transform: "skew(20deg)",
@@ -59,6 +61,13 @@ export const whiteBoxStyle = (
       fontSize: "28px",
       textTransform: "uppercase",
     },
+    "@keyframes changeWidth": {
+      "0%": { width: "35%" },
+      "25%": { width: "110%" },
+      "50%": { width: "110%" },
+      "75%": { width: "110%" },
+      "100%": { width: "35%" },
+    },
   },
 });
 
@@ -83,7 +92,7 @@ export const getMenuCounterStyle = (textColor): SxProps => ({
   },
 });
 
-export const taskGroupBackFace = (): SxProps => ({
+export const taskGroupBackFace = (role): SxProps => ({
   position: "absolute",
   width: "105%",
   height: "100%",
@@ -91,14 +100,82 @@ export const taskGroupBackFace = (): SxProps => ({
   backfaceVisibility: "hidden",
   transform: "rotateX(180deg)",
   overflow: "hidden",
-  zIndex: "-1",
+  paddingLeft: "25%",
   top: 0,
   background: "linear-gradient(to right, #B34684, #B3A446)",
   animation: "changeColorLetters 10s linear infinite",
   backgroundSize: "200% auto",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  transitionDuration: "animation 10s ease-in-out",
+  "> p": {
+    fontFamily: "Kanit",
+    background: "linear-gradient(to right, #FFFFF7, #BDBDB7)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    backgroundSize: "200% auto",
+    animation: "changeColorLetters 2s linear infinite",
+    fontWeight: "800",
+    fontSize: "24px",
+    textTransform: "uppercase",
+    whiteSpace: "nowrap",
+  },
+  "> svg": {
+    color: "white",
+    ":first-of-type": {
+      animation: `${
+        role === "extraIncome" ? "moveRandom1" : "moveRandom2"
+      } 15s linear infinite`,
+    },
+    ":nth-of-type(2n)": {
+      animation: `${
+        role === "networking" ? "moveRandom2" : "moveRandom3"
+      } 15s linear infinite`,
+      transform: "rotate(-10deg) translate(-200px) rotate(360deg)",
+    },
+    ":nth-of-type(3n)": {
+      animation: `${
+        role === "requalification" ? "moveRandom3" : "moveRandom4"
+      } 15s linear infinite`,
+      transform: "rotate(-10deg) translate(-200px) rotate(360deg)",
+    },
+    animation: `${
+      role === "extraIncome" ? "moveRandom4" : "moveRandom1"
+    } 15s linear infinite`,
+    transform: "rotate(-10deg) translate(-200px) rotate(360deg)",
+  },
   "@keyframes changeColorLetters": {
     "0%": { backgroundPosition: "0% 50%" },
     "50%": { backgroundPosition: "100% 50%" },
+  },
+  "@keyframes moveRandom1": {
+    "0%": { transform: "rotate(-10deg) translate(400px) rotate(360deg)" },
+    "25%": { transform: "rotate(40deg) translate(-400px) rotate(-20deg)" },
+    "50%": { transform: "rotate(20deg) translate(-600px) rotate(20deg)" },
+    "75%": { transform: "rotate(0deg) translate(800px) rotate(360deg)" },
+    "100%": { transform: "rotate(-10deg) translate(600px) rotate(360deg)" },
+  },
+  "@keyframes moveRandom2": {
+    "0%": { transform: "rotate(20deg) translate(200px) rotate(180deg)" },
+    "25%": { transform: "rotate(-20deg) translate(-400px) rotate(10deg)" },
+    "50%": { transform: "rotate(30deg) translate(600px) rotate(-30deg)" },
+    "75%": { transform: "rotate(0deg) translate(800px) rotate(360deg)" },
+    "100%": { transform: "rotate(20deg) translate(600px) rotate(180deg)" },
+  },
+  "@keyframes moveRandom3": {
+    "0%": { transform: "rotate(-20deg) translate(200px) rotate(270deg)" },
+    "25%": { transform: "rotate(-30deg) translate(-400px) rotate(360deg)" },
+    "50%": { transform: "rotate(40deg) translate(600px) rotate(-40deg)" },
+    "75%": { transform: "rotate(10deg) translate(800px) rotate(270deg)" },
+    "100%": { transform: "rotate(-20deg) translate(600px) rotate(270deg)" },
+  },
+  "@keyframes moveRandom4": {
+    "0%": { transform: "rotate(-30deg) translate(-400px) rotate(90deg)" },
+    "25%": { transform: "rotate(-10deg) translate(-400px) rotate(30deg)" },
+    "50%": { transform: "rotate(20deg) translate(-600px) rotate(-20deg)" },
+    "75%": { transform: "rotate(5deg) translate(800px) rotate(360deg)" },
+    "100%": { transform: "rotate(-30deg) translate(600px) rotate(90deg)" },
   },
 });
 
@@ -110,6 +187,5 @@ export const getSwipeAnimation = (completed: TaskGroupProps["completed"]) => ({
   transform: completed ? "rotateX(180deg)" : "none",
   background: "linear-gradient(to right, #B34684, #B3A446)",
   marginLeft: "15%",
-  // transition: "transform 2s",
-  // perspective: "1000px",
+  transition: "1s 2s",
 });

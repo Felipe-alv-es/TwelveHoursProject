@@ -13,6 +13,8 @@ import { TaskGroupProps } from "./TaskGroup.types.ts";
 import AddButton from "../AddButton/AddButton.tsx";
 // @ts-ignore
 import Alarm03 from "../../assets/audio/Alarm03.wav";
+import { LuLock } from "react-icons/lu";
+import { IoMdHelp, IoMdRefresh } from "react-icons/io";
 
 const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
   ({ role, variant, completed, ...props }, ref) => {
@@ -176,7 +178,16 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
                 <AddButton />
               </IconButton>
             </Box>
-            <Box sx={taskGroupBackFace()}></Box>
+            <Box sx={taskGroupBackFace(role)}>
+              <LuLock className="svg-item" size={"32px"} />
+              <LuLock className="svg-item" size={"32px"} />
+              <IoMdHelp className="svg-item" size={"32px"} />
+              <Typography>{`${getRoleText()} Concluido!`}</Typography>
+              <IoMdHelp className="svg-item" size={"32px"} />
+              <IoMdRefresh className="svg-item" size={"32px"} />
+              <IoMdRefresh className="svg-item" size={"32px"} />
+              <IoMdRefresh className="svg-item" size={"32px"} />
+            </Box>
           </Box>
         </StyledContainer>
 
