@@ -168,7 +168,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
               <StyledSubtitle completed={completed} />
             </Box>
           </Box>
-          <Box sx={getSwipeAnimation(completed)}>
+          <Box sx={getSwipeAnimation(completed, role)}>
             <Box sx={getItemContainerStyle()} ref={ElementRef}>
               {renderItems()}
             </Box>

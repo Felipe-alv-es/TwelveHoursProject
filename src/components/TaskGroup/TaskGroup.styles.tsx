@@ -39,7 +39,7 @@ const useTitleTimer = () => {
   const [titleTimer, setTitleTimer] = useState("");
   useEffect(() => {
     const timerId = setTimeout(() => {
-      setTitleTimer("100% 90%");
+      setTitleTimer("150% 90%");
     }, 2000);
 
     return () => clearTimeout(timerId);
@@ -67,7 +67,7 @@ export const whiteBoxStyle = (
 ): SxProps => {
   const getFinishedDegrade = () => {
     const gradientStartColor = "#B34684";
-    const gradientEndColor = "#B3A446";
+    const gradientEndColor = "#E0EC3A";
 
     const gradientColor = tinycolor
       .mix(gradientStartColor, gradientEndColor, 50)
@@ -96,8 +96,8 @@ export const whiteBoxStyle = (
 
       return gradientColor;
     } else {
-      const gradientStartColor = "#6F82C3";
-      const gradientEndColor = "#879eed";
+      const gradientStartColor = "#cd4f4e";
+      const gradientEndColor = "#A23D3D";
 
       const gradientColor = tinycolor
         .mix(gradientStartColor, gradientEndColor, 50)
@@ -124,12 +124,12 @@ export const whiteBoxStyle = (
       textAlign: "center",
       position: "relative",
       "> p": {
-        backgroundImage: `linear-gradient(0deg, ${getFinishedDegrade()} 70%, ${getRolesDegrade()} 70%)`,
+        backgroundImage: `linear-gradient(30deg, ${getFinishedDegrade()} 70%, ${getRolesDegrade()} 70%)`,
         WebkitTextFillColor: "transparent",
         WebkitBackgroundClip: "text",
         fontFamily: "Kanit",
         transition: "1s",
-        backgroundSize: "100% 290%",
+        backgroundSize: "100% 1100%",
       },
       "> p:nth-of-type(2n)": {
         fontSize: "20px",
@@ -278,13 +278,21 @@ export const taskGroupBackFace = (role): SxProps => ({
   },
 });
 
-export const getSwipeAnimation = (completed: TaskGroupProps["completed"]) => ({
+export const getSwipeAnimation = (
+  completed: TaskGroupProps["completed"],
+  role: TaskGroupProps["role"]
+) => ({
   width: "105%",
   position: "relative",
   transformStyle: "preserve-3d",
   backfaceVisibility: "hidden",
   transform: completed ? "rotateX(180deg)" : "none",
-  background: "linear-gradient(to right, #B34684, #B3A446)",
+  background:
+    role === "requalification"
+      ? "linear-gradient(to right, #758FE5, #455588)"
+      : role === "networking"
+      ? "linear-gradient(to right, #389771, #47C191)"
+      : "linear-gradient(to right, #cd4f4e, #A23D3D)",
   animation: "changeColorLetters 10s linear infinite",
   backgroundSize: "200% auto",
   marginLeft: "15%",
