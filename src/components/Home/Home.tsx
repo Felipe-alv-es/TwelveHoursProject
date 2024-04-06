@@ -18,8 +18,6 @@ import TaskGroup from "../TaskGroup/TaskGroup.tsx";
 import { pagesContent } from "../../assets/utils/helpContent.ts";
 import { FaExchangeAlt } from "react-icons/fa";
 import { IoMdHelp, IoMdRefresh } from "react-icons/io";
-// @ts-ignore
-import happyHour from "../../assets/images/happyHour.jpg";
 
 const Home = () => {
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -40,13 +38,6 @@ const Home = () => {
   const handleClick = () => {
     setClicked(clicked === "Hour" ? "HalfHour" : "Hour");
     window.location.reload();
-  };
-
-  const handleHappyHour = () => {
-    if (completeExtra && completeNet && completeReq) {
-      return true;
-    }
-    return false;
   };
 
   const handleDataUpdateStatus = () => {
@@ -199,67 +190,6 @@ const Home = () => {
               Aprenda mais
             </Button>
           </Box>
-        </Box>
-      </Modal>
-      <Modal
-        open={handleHappyHour()}
-        onClose={handleClose}
-        onClick={handleDataUpdateStatus}
-      >
-        <Box
-          sx={{
-            margin: "5%",
-            padding: "2%",
-            height: "80%",
-            borderRadius: "32px",
-            transform: "translateY(-3%)",
-            animation: "backgroundMove 2s infinite",
-            backgroundImage: `url(${happyHour})`,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            cursor: "pointer",
-            "> p": {
-              fontWeight: "800",
-              fontFamily: "Kanit",
-              fontSize: "32px",
-              textTransform: "uppercase",
-              textAlign: "right",
-              background: "linear-gradient(to right, #B34684, #B3A446)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundSize: "200% auto",
-              animation: "floaterLetters 0.5s linear infinite",
-              whiteSpace: "pre-wrap",
-            },
-            ">p:nth-of-type(2n)": {
-              fontWeight: "800",
-              fontFamily: "Kanit",
-              fontSize: "32px",
-              textTransform: "uppercase",
-              textAlign: "left",
-              background: "linear-gradient(to right, #B34684, #B3A446)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundSize: "200% auto",
-              animation: "floaterLetters 0.5s linear infinite",
-              position: "absolute",
-              bottom: 0,
-            },
-            "@keyframes backgroundMove": {
-              "0%": { transform: "translateY(-3%);transition: ease 0.5s" },
-              "50%": { transform: "translateY(3%);transition: ease 0.5s" },
-            },
-          }}
-        >
-          <Typography>
-            {"Clique em qualquer \n lugar para reiniciar"}
-          </Typography>
-          <Typography>
-            {
-              " o descanso é tão \n crucial  quanto a ação.\n Permita-se recarregar."
-            }
-          </Typography>
         </Box>
       </Modal>
     </Box>

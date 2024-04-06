@@ -1,7 +1,8 @@
-import React from "react";
-import { Typography, Paper } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Paper, Typography } from "@mui/material";
 import { TaskGroupProps } from "./TaskGroup.types";
 import { SxProps } from "@mui/material/";
+import tinycolor from "tinycolor2";
 
 export const StyledContainer = (props) => {
   const { completed, ...rest } = props;
@@ -9,15 +10,23 @@ export const StyledContainer = (props) => {
     <Paper
       sx={{
         margin: "2% 10% 2% 10%",
-        padding: "1.5%",
+        minHeight: completed ? "133px" : "",
         borderRadius: "32px",
-        background: `linear-gradient(to right, #089CD4, #5DE2EE)`,
-        "> div:first-of-type": {
-          justifyContent: "space-between",
-          paddingRight: "1%",
-        },
-        "> div": {
-          display: "flex",
+        background: "transparent",
+        position: "relative",
+        overflow: "hidden",
+        display: "flex",
+        "> .style-artifact": {
+          background: "#123357",
+          width: "25%",
+          height: "70%",
+          position: "absolute",
+          transform: "skew(20deg)",
+          bottom: 0,
+          zIndex: 1,
+          "@media(max-width: 1920px)": {
+            width: "36%",
+          },
         },
       }}
       elevation={10}
@@ -26,105 +35,283 @@ export const StyledContainer = (props) => {
   );
 };
 
-export const StyledTypography = (props) => {
-  return (
-    <Typography
-      fontWeight="800"
-      fontFamily="Kanit"
-      color="white"
-      whiteSpace="nowrap"
-      fontSize="24px"
-      sx={{ paddingBottom: "2%" }}
-      {...props}
-    />
-  );
+const useTitleTimer = () => {
+  const [titleTimer, setTitleTimer] = useState("");
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setTitleTimer("150% 90%");
+    }, 2000);
+
+    return () => clearTimeout(timerId);
+  }, []);
+
+  return titleTimer;
 };
 
-export const StyledSubtitle = (props) => {
-  return (
-    <Typography
-      variant="body2"
-      fontWeight="300"
-      fontFamily="Kanit"
-      paddingLeft="3%"
-      whiteSpace="nowrap"
-      paddingBottom="1.2%"
-      alignSelf="center"
-      color="white"
-      fontStyle="italic"
-      {...props}
-    />
-  );
+const useSubtitleTimer = () => {
+  const [subtitleTimer, setSubtitleTimer] = useState("");
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setSubtitleTimer("100% 90%");
+    }, 1000);
+
+    return () => clearTimeout(timerId);
+  }, []);
+
+  return subtitleTimer;
 };
 
-export const taskGroupBackFace = (): SxProps => ({
-  position: "absolute",
-  width: "80%",
-  height: "100%",
-  margin: "0% 10% 0% 10%",
-  borderRadius: "32px",
-  backfaceVisibility: "visible",
-  transform: "rotateX(180deg)",
-  overflow: "hidden",
-  zIndex: "-1",
-  top: 0,
-  background: "linear-gradient(to right, #B34684, #B3A446)",
-  animation: "floaterLetters 10s linear infinite",
-  backgroundSize: "200% auto",
-  "> div:first-of-type": {
-    background: "#123357",
-    width: "32%",
-    height: "80%",
-    position: "absolute",
-    transform: "skew(20deg)",
-    bottom: -1,
-  },
-  "div:nth-of-type(2n)": {
+export const whiteBoxStyle = (
+  completed?: TaskGroupProps["completed"],
+  role?: TaskGroupProps["role"]
+): SxProps => {
+  const getFinishedDegrade = () => {
+    const gradientStartColor = "#B34684";
+    const gradientEndColor = "#E0EC3A";
+
+    const gradientColor = tinycolor
+      .mix(gradientStartColor, gradientEndColor, 50)
+      .toHexString();
+
+    return gradientColor;
+  };
+
+  const getRolesDegrade = () => {
+    if (role === "requalification") {
+      const gradientStartColor = "#414F7F";
+      const gradientEndColor = "#455588";
+
+      const gradientColor = tinycolor
+        .mix(gradientStartColor, gradientEndColor, 50)
+        .toHexString();
+
+      return gradientColor;
+    } else if (role === "networking") {
+      const gradientStartColor = "#389771";
+      const gradientEndColor = "#47C191";
+
+      const gradientColor = tinycolor
+        .mix(gradientStartColor, gradientEndColor, 50)
+        .toHexString();
+
+      return gradientColor;
+    } else {
+      const gradientStartColor = "#cd4f4e";
+      const gradientEndColor = "#A23D3D";
+
+      const gradientColor = tinycolor
+        .mix(gradientStartColor, gradientEndColor, 50)
+        .toHexString();
+
+      return gradientColor;
+    }
+  };
+
+  return {
     background: "#FFFFF7",
-    width: "30%",
+    animation: completed ? "changeWidth 5s ease-in-out" : "",
+    width: "25%",
+    transition: "3s",
     height: "100%",
-    marginLeft: "-2.5%",
+    marginLeft: "-3%",
     transform: "skew(20deg)",
     display: "grid",
     placeItems: "center",
-    gap: "0%",
+    zIndex: 1,
+    position: "absolute",
     "> div": {
-      height: "100%",
-      width: "100%",
       transform: "skew(-20deg)",
       textAlign: "center",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
+      position: "relative",
+      "> p": {
+        backgroundImage: `linear-gradient(30deg, ${getFinishedDegrade()} 70%, ${getRolesDegrade()} 70%)`,
+        WebkitTextFillColor: "transparent",
+        WebkitBackgroundClip: "text",
+        fontFamily: "Kanit",
+        transition: "1s",
+        backgroundSize: "100% 1100%",
+      },
+      "> p:nth-of-type(2n)": {
+        fontSize: "20px",
+        fontWeight: "600",
+        WebkitBackgroundSize: completed ? useSubtitleTimer : "",
+        animation: completed ? "popEffect 0.3s 1.8s ease-in-out" : "",
+        "@keyframes popEffect": {
+          "0%": { transform: "scale(1.00)" },
+          "50%": { transform: "scale(1.1)" },
+          "100%": { transform: "scale(1.00)" },
+        },
+      },
       "> p:first-of-type": {
         fontWeight: "800",
-        fontFamily: "Kanit",
         fontSize: "28px",
         textTransform: "uppercase",
-      },
-      ">p": {
-        fontWeight: "600",
-        fontFamily: "Kanit",
-        background: "linear-gradient(to right, #B34684, #B3A446)",
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent",
-        fontSize: "20px",
-        backgroundSize: "200% auto",
-        animation: "floaterLetters 2s linear infinite",
-      },
-      "@keyframes floaterLetters": {
-        "0%": { backgroundPosition: "0% 50%" },
-        "50%": { backgroundPosition: "100% 50%" },
+        WebkitBackgroundSize: completed ? useTitleTimer : "",
+        animation: completed ? "popEffect 0.3s 2.8s ease-in-out" : "",
       },
     },
+    "@keyframes changeWidth": {
+      "0%": { width: "25%" },
+      "25%": { width: "110%" },
+      "50%": { width: "110%" },
+      "75%": { width: "110%" },
+      "100%": { width: "25%" },
+    },
+    "@media(max-width: 1920px)": {
+      width: "35%",
+      "@keyframes changeWidth": {
+        "0%": { width: "35%" },
+        "25%": { width: "110%" },
+        "50%": { width: "110%" },
+        "75%": { width: "110%" },
+        "100%": { width: "35%" },
+      },
+    },
+  };
+};
+
+export const getItemContainerStyle = (): SxProps => ({
+  display: "flex",
+  width: "100%",
+  padding: " 2% 2% 2% 2%",
+  justifyContent: "center",
+});
+
+export const getMenuCounterStyle = (textColor): SxProps => ({
+  display: "flex",
+  right: 20,
+  top: 10,
+  position: "absolute",
+  alignItems: "center",
+  "> p": {
+    fontWeight: "600",
+    fontFamily: "Kanit",
+    fontSize: "20px",
+    color: textColor,
   },
 });
 
-export const getSwipeAnimation = (completed: TaskGroupProps["completed"]) => ({
+export const taskGroupBackFace = (role): SxProps => ({
+  position: "absolute",
+  width: "105%",
+  height: "100%",
+  marginLeft: "-5%",
+  backfaceVisibility: "hidden",
+  transform: "rotateX(180deg)",
+  overflow: "hidden",
+  paddingLeft: "25%",
+  top: 0,
+  background: "linear-gradient(to right, #B34684, #B3A446)",
+  animation: "changeColorLetters 10s linear infinite",
+  backgroundSize: "200% auto",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  transitionDuration: "animation 10s ease-in-out",
+  "> p": {
+    fontFamily: "Kanit",
+    background: "linear-gradient(to right, #FFFFF7, #BDBDB7)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    backgroundSize: "200% auto",
+    animation: "changeColorLetters 2s linear infinite",
+    fontWeight: "800",
+    fontSize: "24px",
+    textTransform: "uppercase",
+    whiteSpace: "nowrap",
+  },
+  "> svg": {
+    color: "white",
+    ":first-of-type": {
+      animation: `${
+        role === "extraIncome" ? "moveRandom1" : "moveRandom2"
+      } 15s linear infinite`,
+    },
+    ":nth-of-type(2n)": {
+      animation: `${
+        role === "networking" ? "moveRandom3" : "moveRandom4"
+      } 15s linear infinite`,
+      transform: "rotate(-10deg) translate(-200px) rotate(360deg)",
+    },
+    ":nth-of-type(3n)": {
+      animation: `${
+        role === "requalification" ? "moveRandom1" : "moveRandom4"
+      } 15s linear infinite`,
+      transform: "rotate(-10deg) translate(-200px) rotate(360deg)",
+    },
+    animation: `${
+      role === "extraIncome" ? "moveRandom2" : "moveRandom3"
+    } 15s linear infinite`,
+    transform: "rotate(-10deg) translate(-200px) rotate(360deg)",
+  },
+  "@keyframes changeColorLetters": {
+    "0%": { backgroundPosition: "0% 50%" },
+    "50%": { backgroundPosition: "100% 50%" },
+  },
+  "@keyframes moveRandom1": {
+    "0%": { transform: "rotate(-10deg) translate(400px) rotate(360deg)" },
+    "25%": { transform: "rotate(40deg) translate(-400px) rotate(-20deg)" },
+    "50%": { transform: "rotate(20deg) translate(-600px) rotate(20deg)" },
+    "75%": { transform: "rotate(0deg) translate(800px) rotate(360deg)" },
+    "100%": { transform: "rotate(-10deg) translate(600px) rotate(360deg)" },
+  },
+  "@keyframes moveRandom2": {
+    "0%": { transform: "rotate(20deg) translate(200px) rotate(180deg)" },
+    "25%": { transform: "rotate(-20deg) translate(-400px) rotate(10deg)" },
+    "50%": { transform: "rotate(30deg) translate(600px) rotate(-30deg)" },
+    "75%": { transform: "rotate(0deg) translate(800px) rotate(360deg)" },
+    "100%": { transform: "rotate(20deg) translate(600px) rotate(180deg)" },
+  },
+  "@keyframes moveRandom3": {
+    "0%": { transform: "rotate(-20deg) translate(200px) rotate(270deg)" },
+    "25%": { transform: "rotate(-30deg) translate(-400px) rotate(360deg)" },
+    "50%": { transform: "rotate(40deg) translate(600px) rotate(-40deg)" },
+    "75%": { transform: "rotate(10deg) translate(800px) rotate(270deg)" },
+    "100%": { transform: "rotate(-20deg) translate(600px) rotate(270deg)" },
+  },
+  "@keyframes moveRandom4": {
+    "0%": { transform: "rotate(-30deg) translate(-400px) rotate(90deg)" },
+    "25%": { transform: "rotate(-10deg) translate(-400px) rotate(30deg)" },
+    "50%": { transform: "rotate(20deg) translate(-600px) rotate(-20deg)" },
+    "75%": { transform: "rotate(5deg) translate(800px) rotate(360deg)" },
+    "100%": { transform: "rotate(-30deg) translate(600px) rotate(90deg)" },
+  },
+});
+
+export const getSwipeAnimation = (
+  completed: TaskGroupProps["completed"],
+  role: TaskGroupProps["role"]
+) => ({
+  width: "105%",
   position: "relative",
   transformStyle: "preserve-3d",
-  transition: "transform 2s",
   backfaceVisibility: "hidden",
-  perspective: "1000px",
   transform: completed ? "rotateX(180deg)" : "none",
+  background:
+    role === "requalification"
+      ? "linear-gradient(to right, #758FE5, #455588)"
+      : role === "networking"
+      ? "linear-gradient(to right, #389771, #47C191)"
+      : "linear-gradient(to right, #cd4f4e, #A23D3D)",
+  animation: "changeColorLetters 10s linear infinite",
+  backgroundSize: "200% auto",
+  marginLeft: "15%",
+  transition: "1s 2s",
 });
+
+export const StyledSubtitle = (props) => {
+  const { completed, ...rest } = props;
+
+  const [subtitleText, setSubtitleText] = useState("Incompleto");
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setSubtitleText("Completo");
+    }, 1800);
+
+    return () => clearTimeout(timerId);
+  }, []);
+
+  return (
+    <Typography {...rest}>{completed ? subtitleText : "Incompleto"}</Typography>
+  );
+};

@@ -3,10 +3,11 @@ import { Box } from "@mui/material";
 
 export interface AddButtonProps {
   minus?: boolean;
+  degrade?: boolean;
 }
 
 const AddButton = React.forwardRef<HTMLDivElement, AddButtonProps>(
-  ({ minus }, ref) => {
+  ({ minus, degrade }, ref) => {
     return (
       <Box
         sx={{
@@ -32,8 +33,11 @@ const AddButton = React.forwardRef<HTMLDivElement, AddButtonProps>(
           >
             <defs>
               <linearGradient id="myGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#B34684" />
-                <stop offset="100%" stopColor="#B3A446" />
+                <stop offset="0%" stopColor={degrade ? "#B34684" : "#FFFFF7"} />
+                <stop
+                  offset="100%"
+                  stopColor={degrade ? "#B3A446" : "#FFFFF7"}
+                />
               </linearGradient>
             </defs>
             <circle cx="12" cy="12" r="10" stroke="url(#myGradient)" />
@@ -64,8 +68,14 @@ const AddButton = React.forwardRef<HTMLDivElement, AddButtonProps>(
                   x2="100%"
                   y2="0%"
                 >
-                  <stop offset="0%" stopColor="#B34684" />
-                  <stop offset="100%" stopColor="#B3A446" />
+                  <stop
+                    offset="0%"
+                    stopColor={degrade ? "#B34684" : "#FFFFF7"}
+                  />
+                  <stop
+                    offset="100%"
+                    stopColor={degrade ? "#B3A446" : "#FFFFF7"}
+                  />
                 </linearGradient>
               </defs>
               <path
