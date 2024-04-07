@@ -12,7 +12,6 @@ export const StyledContainer = (props) => {
         margin: "2% 10% 2% 10%",
         minHeight: completed ? "133px" : "",
         borderRadius: "32px",
-        background: "transparent",
         position: "relative",
         overflow: "hidden",
         display: "flex",
@@ -173,8 +172,13 @@ export const whiteBoxStyle = (
 export const getItemContainerStyle = (): SxProps => ({
   display: "flex",
   width: "100%",
-  padding: " 2% 2% 2% 2%",
-  justifyContent: "center",
+  height: "100%",
+  marginLeft: "15%",
+  alignItems: "end",
+  padding: "1%",
+  "@media(max-width: 1920px)": {
+    marginLeft: "25%",
+  },
 });
 
 export const getMenuCounterStyle = (textColor): SxProps => ({

@@ -12,6 +12,7 @@ import {
 import TaskItem from "../TaskItem/TaskItem.tsx";
 import { TaskGroupProps } from "./TaskGroup.types.ts";
 import AddButton from "../AddButton/AddButton.tsx";
+import Waves from "../Waves/Waves.tsx";
 // @ts-ignore
 import Alarm03 from "../../assets/audio/Alarm03.wav";
 import { LuLock } from "react-icons/lu";
@@ -34,6 +35,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
     });
     const [elementCount, setElementCount] = useState(0);
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [timePercent, setTimePercent] = useState(0);
 
     const ElementRef = useRef(null as any);
     const audioRef = useRef<HTMLAudioElement>(null);
@@ -114,22 +116,22 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
     const selectTextColor = () => {
       if (
         variant === "Hour"
-          ? (role === "extraIncome" && elementCount > 5) ||
-            (role === "networking" && elementCount > 4) ||
-            (role === "requalification" && elementCount > 3)
-          : (role === "extraIncome" && elementCount > 10) ||
-            (role === "networking" && elementCount > 8) ||
-            (role === "requalification" && elementCount > 6)
+          ? (role === "extraIncome" && elementCount + 1 > 5) ||
+            (role === "networking" && elementCount + 1 > 4) ||
+            (role === "requalification" && elementCount + 1 > 3)
+          : (role === "extraIncome" && elementCount + 1 > 10) ||
+            (role === "networking" && elementCount + 1 > 8) ||
+            (role === "requalification" && elementCount + 1 > 6)
       ) {
         return "#C62828";
       } else if (
         variant === "Hour"
-          ? (role === "extraIncome" && elementCount < 5) ||
-            (role === "networking" && elementCount < 4) ||
-            (role === "requalification" && elementCount < 3)
-          : (role === "extraIncome" && elementCount < 10) ||
-            (role === "networking" && elementCount < 8) ||
-            (role === "requalification" && elementCount < 6)
+          ? (role === "extraIncome" && elementCount + 1 < 5) ||
+            (role === "networking" && elementCount + 1 < 4) ||
+            (role === "requalification" && elementCount + 1 < 3)
+          : (role === "extraIncome" && elementCount + 1 < 10) ||
+            (role === "networking" && elementCount + 1 < 8) ||
+            (role === "requalification" && elementCount + 1 < 6)
       ) {
         return "yellow";
       }
@@ -158,6 +160,39 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
       );
     };
 
+    useEffect(() => {
+      const observer = new MutationObserver((mutationsList) => {
+        mutationsList.forEach((mutation) => {
+          const timeTotal = variant === "Hour" ? 3600 : 1800;
+
+          if (
+            mutation.type === "characterData" &&
+            mutation.target.parentElement &&
+            mutation.target.parentElement.classList.contains("time-counter") &&
+            mutation.target.textContent
+          ) {
+            const [horas, minutos] = mutation.target.textContent
+              .split(":")
+              .map(Number);
+            const tempoEmMinutos = horas * 60 + minutos;
+            const porcentagem = (tempoEmMinutos * 100) / timeTotal;
+
+            return setTimePercent(porcentagem);
+          }
+        });
+      });
+
+      const element = ElementRef.current;
+      if (element) {
+        const config = { characterData: true, subtree: true };
+        observer.observe(element, config);
+
+        return () => {
+          observer.disconnect();
+        };
+      }
+    }, []);
+
     return (
       <Box>
         <StyledContainer completed {...props}>
@@ -169,6 +204,36 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
             </Box>
           </Box>
           <Box sx={getSwipeAnimation(completed, role)}>
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: 0,
+                left: "10%",
+                display: "flex",
+                translate: "-2% 10%",
+                background: "purple",
+                transform: "translateX(-0%)",
+                // zIndex: 200,
+                // transform: "scale(1.80)",
+                // animation: "move-horizontal 1s linear infinite",
+                "> svg:nth-of-type(2n)": {
+                  transform: "rotateY(180deg)",
+                },
+                "@keyframes move-horizontal": {
+                  "0%": {
+                    transform: "translateX(-2%%)",
+                  },
+                  "100%": {
+                    transform: "translateX(-50%)",
+                  },
+                },
+              }}
+            >
+              <Waves />
+              <Waves />
+              <Waves />
+              <Waves />
+            </Box>
             <Box sx={getItemContainerStyle()} ref={ElementRef}>
               {renderItems()}
             </Box>
