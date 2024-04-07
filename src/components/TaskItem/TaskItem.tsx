@@ -12,7 +12,7 @@ import { PiStudent } from "react-icons/pi";
 const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
   ({ role, onLocked, state, variant, onComplete, ...props }, ref) => {
     const [seconds, setSeconds] = useState(
-      variant === "Hour" ? 30 : variant === "HalfHour" ? 1800 : 3600
+      variant === "Hour" ? 3600 : variant === "HalfHour" ? 1800 : 3600
     );
     const [timerStarted, setTimerStarted] = useState(false);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
