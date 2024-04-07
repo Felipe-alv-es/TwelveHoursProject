@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { TaskItemProps } from "./TaskItem.types.ts";
-import { Box, IconButton, Typography } from "@mui/material";
+import { iconButtonStyle, getContainerStyle } from "./TaskItem.styles.ts";
+import { Box, IconButton, Typography, Tooltip } from "@mui/material";
 import { LuLock } from "react-icons/lu";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
@@ -11,7 +12,7 @@ import { PiStudent } from "react-icons/pi";
 const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
   ({ role, onLocked, state, variant, onComplete, ...props }, ref) => {
     const [seconds, setSeconds] = useState(
-      variant === "Hour" ? 2 : variant === "HalfHour" ? 1800 : 3600
+      variant === "Hour" ? 30 : variant === "HalfHour" ? 1800 : 3600
     );
     const [timerStarted, setTimerStarted] = useState(false);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -91,56 +92,25 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
     };
 
     return (
-      <Box
-        sx={{
-          display: "grid",
-          placeItems: "center",
-          marginRight: "1%",
-        }}
-        {...props}
-      >
+      <Box sx={getContainerStyle} {...props}>
         {state === "active" && !onLocked && (
           <Typography
             className="time-counter"
             sx={{
-              fontWeight: "400",
-              fontFamily: "Kanit",
-              textAlign: "center",
-              color: "#FFFFF7",
-              fontSize: "16px",
+              opacity: 0,
             }}
           >{`${formatTime(seconds)}`}</Typography>
         )}
-
-        <IconButton
-          onClick={() => {
-            handleClick();
-          }}
-          sx={{
-            color: "#FFFFF7",
-            height: "fit-content",
-            transition: "1s",
-            transform: "translateY(-3%)",
-            pointerEvents: state === "finished" || onLocked ? "none" : "",
-            ":hover": {
-              transform: !timerStarted ? "scale(1.1)" : "",
-            },
-            animation:
-              timerStarted && seconds && seconds > 0 && timerStarted
-                ? "floater 1.5s infinite"
-                : "",
-            "> svg": {
-              height: state === "active" && !onLocked ? "64px" : "40px",
-              width: state === "active" && !onLocked ? "64px" : "40px",
-            },
-            "@keyframes floater": {
-              "0%": { transform: "translateY(-3%);transition: ease 0.5s" },
-              "50%": { transform: "translateY(3%);transition: ease 0.5s" },
-            },
-          }}
-        >
-          {getContent()}
-        </IconButton>
+        <Tooltip placement="top" arrow title={formatTime(seconds)}>
+          <IconButton
+            onClick={() => {
+              handleClick();
+            }}
+            sx={iconButtonStyle(state, onLocked, timerStarted, seconds)}
+          >
+            {getContent()}
+          </IconButton>
+        </Tooltip>
       </Box>
     );
   }

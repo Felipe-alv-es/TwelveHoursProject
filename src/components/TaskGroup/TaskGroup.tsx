@@ -174,10 +174,10 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
             const [horas, minutos] = mutation.target.textContent
               .split(":")
               .map(Number);
-            const tempoEmMinutos = horas * 60 + minutos;
-            const porcentagem = (tempoEmMinutos * 100) / timeTotal;
+            const timeInMinuts = horas * 60 + minutos;
+            const timePercentage = (timeInMinuts * 40) / timeTotal;
 
-            return setTimePercent(porcentagem);
+            return setTimePercent(timePercentage);
           }
         });
       });
@@ -191,6 +191,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
           observer.disconnect();
         };
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
@@ -210,12 +211,10 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
                 bottom: 0,
                 left: "10%",
                 display: "flex",
-                translate: "-2% 10%",
-                background: "purple",
+                transition: "2s",
+                translate: `-2% ${timePercent === 0 ? 45 : timePercent}%`,
                 transform: "translateX(-0%)",
-                // zIndex: 200,
-                // transform: "scale(1.80)",
-                // animation: "move-horizontal 1s linear infinite",
+                animation: "move-horizontal 10s linear infinite",
                 "> svg:nth-of-type(2n)": {
                   transform: "rotateY(180deg)",
                 },
@@ -229,10 +228,10 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
                 },
               }}
             >
-              <Waves />
-              <Waves />
-              <Waves />
-              <Waves />
+              <Waves role={role} />
+              <Waves role={role} />
+              <Waves role={role} />
+              <Waves role={role} />
             </Box>
             <Box sx={getItemContainerStyle()} ref={ElementRef}>
               {renderItems()}
