@@ -1,33 +1,36 @@
-// import { TaskItemProps } from "./TaskItem.types.ts";
+import { SxProps } from "@mui/material";
+import { TaskItemProps } from "./TaskItem.types";
 
-// export const getPaperStyle = (
-//   seconds: TaskItemProps["seconds"],
-//   state?: TaskItemProps["state"],
-//   onLocked?: TaskItemProps["onLocked"],
-//   timerStarted?: boolean
-// ): SxProps => ({
-//   height: state === "active" && !onLocked ? 96 : 64,
-//   width: state === "active" && !onLocked ? 192 : 64,
-//   minWidth: state === "active" && !onLocked ? 192 : 64,
-//   marginRight: "1%",
-//   display: "grid",
-//   placeItems: "center",
-//   alignSelf: "end",
-//   pointerEvents: onLocked || state === "finished" ? "none" : "auto",
-//   background: getItemColor(state, onLocked),
-//   cursor: "pointer",
-//   transform: "translateY(-3%)",
-//   animation:
-//     timerStarted && seconds && seconds > 0 && timerStarted
-//       ? "floater 1.5s infinite"
-//       : "",
-//   transition: "transform ease 0.5s",
-//   ":hover": {
-//     transform: timerStarted ? "" : "scale(1.05, 1.05)",
-//     transition: timerStarted ? "" : "ease 0.5s",
-//   },
-//   "@keyframes floater": {
-//     "0%": { transform: "translateY(-3%);transition: ease 0.5s" },
-//     "50%": { transform: "translateY(3%);transition: ease 0.5s" },
-//   },
-// });
+export const getContainerStyle = () => ({
+  display: "grid",
+  placeItems: "center",
+  marginRight: "1%",
+});
+
+export const iconButtonStyle = (
+  state: TaskItemProps["state"],
+  onLocked: TaskItemProps["onLocked"],
+  timerStarted,
+  seconds
+): SxProps => ({
+  color: "#FFFFF7",
+  height: "fit-content",
+  transition: "1s",
+  transform: "translateY(-3%)",
+  pointerEvents: state === "finished" || onLocked ? "none" : "",
+  ":hover": {
+    transform: !timerStarted ? "scale(1.1)" : "",
+  },
+  animation:
+    timerStarted && seconds && seconds > 0 && timerStarted
+      ? "floater 1.5s infinite"
+      : "",
+  "> svg": {
+    height: state === "active" && !onLocked ? "64px" : "40px",
+    width: state === "active" && !onLocked ? "64px" : "40px",
+  },
+  "@keyframes floater": {
+    "0%": { transform: "translateY(-3%);transition: ease 0.5s" },
+    "50%": { transform: "translateY(3%);transition: ease 0.5s" },
+  },
+});
