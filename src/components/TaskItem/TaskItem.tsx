@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { getPaperStyle, getActiveIconStyle } from "./TaskItem.styles.ts";
 import { TaskItemProps } from "./TaskItem.types.ts";
-import { Box, Paper, Typography } from "@mui/material";
-import { PiPlayCircleFill, PiPauseCircleFill } from "react-icons/pi";
-import { RiLock2Fill } from "react-icons/ri";
-import { FaCheck } from "react-icons/fa";
+import { Box, IconButton, Typography } from "@mui/material";
+import { LuLock } from "react-icons/lu";
+import { BiMoneyWithdraw } from "react-icons/bi";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
+import { MdOutlineThumbUp, MdLaptopChromebook } from "react-icons/md";
+import { CiLinkedin } from "react-icons/ci";
+import { PiStudent } from "react-icons/pi";
 
 const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
   ({ role, onLocked, state, variant, onComplete, ...props }, ref) => {
@@ -19,6 +21,10 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
         onComplete();
       }
     }, [seconds, state, onComplete]);
+
+    useEffect(() => {
+      localStorage.setItem("seconds", JSON.stringify(seconds));
+    }, [seconds]);
 
     const handleClick = () => {
       if (!onLocked && state !== "finished") {
@@ -55,51 +61,87 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
       return `${formattedMinutes}:${formattedSeconds}`;
     };
 
-    const getIcon = () => {
-      if (!onLocked && state !== "finished") {
-        return timerStarted ? <PiPauseCircleFill /> : <PiPlayCircleFill />;
-      }
-    };
-
     const getContent = () => {
       if (onLocked) {
-        return <RiLock2Fill size="32px" color="#828282" />;
-      } else if (state === "finished") {
-        return <FaCheck color="#FFFFF7" size="32px" />;
-      } else {
-        switch (role) {
-          case "extraIncome":
-            return "Vamos ganhar um dinheiro extra!";
-          case "networking":
-            return " Vamos expandir nossas redes!";
-          case "requalification":
-            return " Vamos nos aprimorar profissionalmente!";
-          default:
-            return "Nenhuma ação programada =(";
+        return <LuLock />;
+      }
+      switch (role) {
+        case "requalification": {
+          if (state === "finished") {
+            return <PiStudent />;
+          } else {
+            return <MdLaptopChromebook />;
+          }
+        }
+        case "extraIncome": {
+          if (state === "finished") {
+            return <BiMoneyWithdraw />;
+          } else {
+            return <FaRegMoneyBillAlt />;
+          }
+        }
+        default: {
+          if (state === "finished") {
+            return <MdOutlineThumbUp />;
+          } else {
+            return <CiLinkedin />;
+          }
         }
       }
     };
 
     return (
-      <Paper
-        sx={getPaperStyle(seconds, state, onLocked, timerStarted)}
-        onClick={handleClick}
+      <Box
+        sx={{
+          display: "grid",
+          placeItems: "center",
+          marginRight: "1%",
+        }}
         {...props}
       >
-        <Box sx={getActiveIconStyle()}>
-          {getIcon()}
-          <Box>
-            <Typography className="first-title">{getContent()}</Typography>
-            <Typography className="second-title">
-              {onLocked
-                ? ""
-                : state === "finished"
-                ? ""
-                : `Tempo restante: ${formatTime(seconds)}`}
-            </Typography>
-          </Box>
-        </Box>
-      </Paper>
+        {state === "active" && !onLocked && (
+          <Typography
+            className="time-counter"
+            sx={{
+              fontWeight: "400",
+              fontFamily: "Kanit",
+              textAlign: "center",
+              color: "#FFFFF7",
+              fontSize: "16px",
+            }}
+          >{`${formatTime(seconds)}`}</Typography>
+        )}
+
+        <IconButton
+          onClick={() => {
+            handleClick();
+          }}
+          sx={{
+            color: "#FFFFF7",
+            height: "fit-content",
+            transition: "1s",
+            transform: "translateY(-3%)",
+            pointerEvents: state === "finished" || onLocked ? "none" : "",
+            ":hover": {
+              transform: !timerStarted ? "scale(1.1)" : "",
+            },
+            animation:
+              timerStarted && seconds && seconds > 0 && timerStarted
+                ? "floater 1.5s infinite"
+                : "",
+            "> svg": {
+              height: state === "active" && !onLocked ? "64px" : "40px",
+              width: state === "active" && !onLocked ? "64px" : "40px",
+            },
+            "@keyframes floater": {
+              "0%": { transform: "translateY(-3%);transition: ease 0.5s" },
+              "50%": { transform: "translateY(3%);transition: ease 0.5s" },
+            },
+          }}
+        >
+          {getContent()}
+        </IconButton>
+      </Box>
     );
   }
 );
