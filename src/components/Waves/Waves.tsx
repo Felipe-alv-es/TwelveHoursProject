@@ -1,10 +1,10 @@
-import React from "react";
+import React, { LegacyRef } from "react";
 
 export interface wavesProps {
   role?: string;
 }
 
-const Waves = React.forwardRef<HTMLDivElement, wavesProps>(({ role }) => {
+const Waves = React.forwardRef<HTMLDivElement, wavesProps>(({ role }, ref) => {
   return (
     <svg
       id="visual"
@@ -13,6 +13,7 @@ const Waves = React.forwardRef<HTMLDivElement, wavesProps>(({ role }) => {
       height="540"
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
+      ref={ref as LegacyRef<SVGSVGElement> | undefined}
     >
       <path
         d="M0 350L22.8 356C45.7 362 91.3 374 137 373.8C182.7 373.7 228.3 361.3 274 351.5C319.7 341.7 365.3 334.3 411.2 330.5C457 326.7 503 326.3 548.8 336.2C594.7 346 640.3 366 686 365C731.7 364 777.3 342 823 332.7C868.7 323.3 914.3 326.7 937.2 328.3L960 330L960 541L937.2 541C914.3 541 868.7 541 823 541C777.3 541 731.7 541 686 541C640.3 541 594.7 541 548.8 541C503 541 457 541 411.2 541C365.3 541 319.7 541 274 541C228.3 541 182.7 541 137 541C91.3 541 45.7 541 22.8 541L0 541Z"
