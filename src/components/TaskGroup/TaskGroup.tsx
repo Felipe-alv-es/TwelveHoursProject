@@ -8,6 +8,7 @@ import {
   getMenuCounterStyle,
   whiteBoxStyle,
   StyledSubtitle,
+  getWavesStyle,
 } from "./TaskGroup.styles.tsx";
 import TaskItem from "../TaskItem/TaskItem.tsx";
 import { TaskGroupProps } from "./TaskGroup.types.ts";
@@ -205,29 +206,7 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
             </Box>
           </Box>
           <Box sx={getSwipeAnimation(completed, role)}>
-            <Box
-              sx={{
-                position: "absolute",
-                bottom: 0,
-                left: "10%",
-                display: "flex",
-                transition: "2s",
-                translate: `-2% ${timePercent === 0 ? 45 : timePercent}%`,
-                transform: "translateX(-0%)",
-                animation: "move-horizontal 10s linear infinite",
-                "> svg:nth-of-type(2n)": {
-                  transform: "rotateY(180deg)",
-                },
-                "@keyframes move-horizontal": {
-                  "0%": {
-                    transform: "translateX(-2%%)",
-                  },
-                  "100%": {
-                    transform: "translateX(-50%)",
-                  },
-                },
-              }}
-            >
+            <Box sx={getWavesStyle(timePercent)}>
               <Waves role={role} />
               <Waves role={role} />
               <Waves role={role} />

@@ -18,6 +18,7 @@ import TaskGroup from "../TaskGroup/TaskGroup.tsx";
 import { pagesContent } from "../../assets/utils/helpContent.ts";
 import { FaExchangeAlt } from "react-icons/fa";
 import { IoMdHelp, IoMdRefresh } from "react-icons/io";
+import { BsFillSkipForwardFill } from "react-icons/bs";
 
 const Home = () => {
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -37,6 +38,11 @@ const Home = () => {
 
   const handleClick = () => {
     setClicked(clicked === "Hour" ? "HalfHour" : "Hour");
+    window.location.reload();
+  };
+
+  const handleSkip = () => {
+    setClicked(clicked === "SkipTask" ? "Hour" : "SkipTask");
     window.location.reload();
   };
 
@@ -126,6 +132,11 @@ const Home = () => {
     <Box>
       <Box sx={{ display: "grid", placeItems: "center" }}>
         <Box sx={getButtonsContainerStyle()}>
+          <Tooltip title="Pular tempo dos itens">
+            <IconButton onClick={handleSkip}>
+              <BsFillSkipForwardFill />
+            </IconButton>
+          </Tooltip>
           <Tooltip title="Resetar Tempo">
             <IconButton onClick={handleDataUpdateStatus}>
               <IoMdRefresh />

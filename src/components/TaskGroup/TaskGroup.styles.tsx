@@ -303,6 +303,28 @@ export const getSwipeAnimation = (
   transition: "1s 2s",
 });
 
+export const getWavesStyle = (timePercent: number) => ({
+  position: "absolute",
+  bottom: 0,
+  left: "10%",
+  display: "flex",
+  transition: "2s",
+  translate: `-2% ${timePercent === 0 ? 45 : timePercent}%`,
+  transform: "translateX(-0%)",
+  animation: "move-horizontal 10s linear infinite",
+  "> svg:nth-of-type(2n)": {
+    transform: "rotateY(180deg)",
+  },
+  "@keyframes move-horizontal": {
+    "0%": {
+      transform: "translateX(-2%%)",
+    },
+    "100%": {
+      transform: "translateX(-50%)",
+    },
+  },
+});
+
 export const StyledSubtitle = (props) => {
   const { completed, ...rest } = props;
 
