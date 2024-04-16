@@ -33,4 +33,7 @@ export const iconButtonStyle = (
     "0%": { transform: "translateY(-3%);transition: ease 0.5s" },
     "50%": { transform: "translateY(3%);transition: ease 0.5s" },
   },
+  "@media(max-width: 1350px)": {
+    pointerEvents: "auto",
+  },
 });

@@ -189,7 +189,10 @@ export const getItemContainerStyle = (): SxProps => ({
     marginLeft: "25%",
   },
   "@media(max-width: 1350px)": {
-    marginLeft: "45%",
+    marginLeft: "25%",
+    width: "80%",
+    minWidth: "80%",
+    overflow: "scroll",
   },
 });
 
@@ -206,7 +209,7 @@ export const getMenuCounterStyle = (textColor): SxProps => ({
     color: textColor,
   },
   "@media(max-width: 1350px)": {
-    right: 50,
+    left: 100,
   },
 });
 
