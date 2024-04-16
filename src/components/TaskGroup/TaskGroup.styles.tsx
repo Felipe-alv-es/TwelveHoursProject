@@ -27,6 +27,9 @@ export const StyledContainer = (props) => {
             width: "36%",
           },
         },
+        "@media(max-width: 1350px)": {
+          minHeight: "170px",
+        },
       }}
       elevation={10}
       {...rest}
@@ -140,6 +143,9 @@ export const whiteBoxStyle = (
           "50%": { transform: "scale(1.1)" },
           "100%": { transform: "scale(1.00)" },
         },
+        "@media(max-width: 1350px)": {
+          fontSize: "14px",
+        },
       },
       "> p:first-of-type": {
         fontWeight: "800",
@@ -147,6 +153,9 @@ export const whiteBoxStyle = (
         textTransform: "uppercase",
         WebkitBackgroundSize: completed ? useTitleTimer : "",
         animation: completed ? "popEffect 0.3s 2.8s ease-in-out" : "",
+        "@media(max-width: 1350px)": {
+          fontSize: "18px",
+        },
       },
     },
     "@keyframes changeWidth": {
@@ -166,6 +175,11 @@ export const whiteBoxStyle = (
         "100%": { width: "35%" },
       },
     },
+    "@media(max-width: 1350px)": {
+      marginLeft: "-10%",
+      paddingLeft: "10%",
+      width: "45%",
+    },
   };
 };
 
@@ -178,6 +192,12 @@ export const getItemContainerStyle = (): SxProps => ({
   padding: "1%",
   "@media(max-width: 1920px)": {
     marginLeft: "25%",
+  },
+  "@media(max-width: 1350px)": {
+    marginLeft: "25%",
+    width: "80%",
+    minWidth: "80%",
+    overflow: "scroll",
   },
 });
 
@@ -192,6 +212,9 @@ export const getMenuCounterStyle = (textColor): SxProps => ({
     fontFamily: "Kanit",
     fontSize: "20px",
     color: textColor,
+  },
+  "@media(max-width: 1350px)": {
+    left: 100,
   },
 });
 
@@ -223,6 +246,9 @@ export const taskGroupBackFace = (role): SxProps => ({
     fontSize: "24px",
     textTransform: "uppercase",
     whiteSpace: "nowrap",
+    "@media(max-width: 1350px)": {
+      fontSize: "14px",
+    },
   },
   "> svg": {
     color: "white",

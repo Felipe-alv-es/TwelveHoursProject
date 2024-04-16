@@ -1,25 +1,49 @@
 import { SxProps } from "@mui/material";
 
+export const getContainerStyle = (): SxProps => ({
+  height: "100vh",
+  paddingBottom: "1%",
+  "@media(max-width: 1360px)": {
+    height: "fit-content",
+  },
+  "@media(max-width: 1350px)": {
+    height: "100vh",
+  },
+});
+
 export const getTitleStyle = (): SxProps => ({
-  typography: "h2",
+  fontSize: "60px",
   textAlign: "center",
   paddingTop: "3%",
   fontWeight: "800",
   fontFamily: "Kanit",
+  "@media(max-width: 1360px)": {
+    fontSize: "60px",
+  },
+  "@media(max-width: 1350px)": {
+    fontSize: "30px",
+  },
 });
 
 export const getSubtitleStyle = (): SxProps => ({
-  typography: "subtitle1",
+  fontSize: "24px",
   textAlign: "center",
   fontWeight: "600",
   fontFamily: "Kanit",
+  "@media(max-width: 1360px)": {
+    fontSize: "24px",
+  },
+  "@media(max-width: 1350px)": {
+    fontSize: "16px",
+  },
 });
 
 export const getButtonsContainerStyle = (): SxProps => ({
   position: "absolute",
   right: "10%",
+  marginTop: "3%",
   "> button": {
-    borderWidth: "4px",
+    borderWidth: "2px",
     borderStyle: "solid",
     borderColor: "#FFFFF7",
     marginLeft: "4px",
@@ -40,6 +64,19 @@ export const getButtonsContainerStyle = (): SxProps => ({
         color: "#D4D4CE",
       },
     },
+  },
+  "@media(max-width: 1360px)": {
+    right: "10%",
+    marginTop: "3%",
+  },
+  "@media(max-width: 1350px)": {
+    bottom: 0,
+    right: 0,
+    marginTop: 0,
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "3% 15% 3% 15%",
   },
 });
 
