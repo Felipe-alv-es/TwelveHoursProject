@@ -27,6 +27,9 @@ export const StyledContainer = (props) => {
             width: "36%",
           },
         },
+        "@media(max-width: 1350px)": {
+          minHeight: "170px",
+        },
       }}
       elevation={10}
       {...rest}
@@ -140,6 +143,9 @@ export const whiteBoxStyle = (
           "50%": { transform: "scale(1.1)" },
           "100%": { transform: "scale(1.00)" },
         },
+        "@media(max-width: 1350px)": {
+          fontSize: "14px",
+        },
       },
       "> p:first-of-type": {
         fontWeight: "800",
@@ -147,6 +153,9 @@ export const whiteBoxStyle = (
         textTransform: "uppercase",
         WebkitBackgroundSize: completed ? useTitleTimer : "",
         animation: completed ? "popEffect 0.3s 2.8s ease-in-out" : "",
+        "@media(max-width: 1350px)": {
+          fontSize: "18px",
+        },
       },
     },
     "@keyframes changeWidth": {
@@ -179,6 +188,9 @@ export const getItemContainerStyle = (): SxProps => ({
   "@media(max-width: 1920px)": {
     marginLeft: "25%",
   },
+  "@media(max-width: 1350px)": {
+    marginLeft: "45%",
+  },
 });
 
 export const getMenuCounterStyle = (textColor): SxProps => ({
@@ -192,6 +204,9 @@ export const getMenuCounterStyle = (textColor): SxProps => ({
     fontFamily: "Kanit",
     fontSize: "20px",
     color: textColor,
+  },
+  "@media(max-width: 1350px)": {
+    right: 50,
   },
 });
 

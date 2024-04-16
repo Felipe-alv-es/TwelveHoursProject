@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+//@ts-ignore
 import Alarm03 from "../../assets/audio/Alarm03.wav";
 import { Box, IconButton, Snackbar, Typography } from "@mui/material";
 import {
@@ -39,6 +40,20 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
 
     const ElementRef = useRef(null as any);
     const audioRef = useRef<HTMLAudioElement>(null);
+
+    const [width, setWidth] = useState(window.innerWidth);
+    const isMobile = width <= 768;
+
+    function handleWindowSizeChange() {
+      setWidth(window.innerWidth);
+    }
+
+    React.useEffect(() => {
+      window.addEventListener("resize", handleWindowSizeChange);
+      return () => {
+        window.removeEventListener("resize", handleWindowSizeChange);
+      };
+    }, []);
 
     useEffect(() => {
       const savedItems = localStorage.getItem(localStorageKey);
@@ -96,9 +111,9 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
         case "extraIncome":
           return "Renda Extra";
         case "networking":
-          return "Networking";
+          return isMobile ? "Net-Working" : "Networking";
         default:
-          return "Requalification";
+          return isMobile ? "Requali-ficação" : "Requalificação";
       }
     };
 
@@ -196,47 +211,90 @@ const TaskGroup = React.forwardRef<HTMLDivElement, TaskGroupProps>(
 
     return (
       <Box>
-        <StyledContainer completed {...props}>
-          <Box className="style-artifact" />
-          <Box sx={whiteBoxStyle(completed, role)}>
-            <Box>
-              <Typography>{getRoleText()}</Typography>
-              <StyledSubtitle completed={completed} />
+        {isMobile ? (
+          <StyledContainer completed {...props}>
+            <Box sx={whiteBoxStyle(completed, role)}>
+              <Box>
+                <Typography>{getRoleText()}</Typography>
+                <StyledSubtitle completed={completed} />
+              </Box>
             </Box>
-          </Box>
-          <Box sx={getSwipeAnimation(completed, role)}>
-            <Box sx={getWavesStyle(timePercent)}>
-              <Waves role={role} />
-              <Waves role={role} />
-              <Waves role={role} />
-              <Waves role={role} />
+            <Box sx={getSwipeAnimation(completed, role)}>
+              <Box sx={getWavesStyle(timePercent)}>
+                <Waves role={role} />
+                <Waves role={role} />
+                <Waves role={role} />
+                <Waves role={role} />
+              </Box>
+              <Box sx={getItemContainerStyle()} ref={ElementRef}>
+                {renderItems()}
+              </Box>
+              <Box sx={getMenuCounterStyle(selectTextColor)}>
+                <IconButton onClick={handleRemoveItem}>
+                  <AddButton minus />
+                </IconButton>
+                <Typography>{`${
+                  elementCount + 1
+                }/${selectTextCount()}`}</Typography>
+                <IconButton onClick={handleAddItem}>
+                  <AddButton />
+                </IconButton>
+              </Box>
+              <Box sx={taskGroupBackFace(role)}>
+                <LuLock className="svg-item" size={"32px"} />
+                <FaMoneyBillWave className="svg-item" size={"32px"} />
+                <IoMdHelp className="svg-item" size={"32px"} />
+                <Typography>{`${getRoleText()} Concluido!`}</Typography>
+                <IoMdRefresh className="svg-item" size={"32px"} />
+                <IoPlanet className="svg-item" size={"32px"} />
+                <BsCashCoin className="svg-item" size={"32px"} />
+                <BsClockHistory className="svg-item" size={"32px"} />
+              </Box>
             </Box>
-            <Box sx={getItemContainerStyle()} ref={ElementRef}>
-              {renderItems()}
+          </StyledContainer>
+        ) : (
+          <StyledContainer completed {...props}>
+            <Box className="style-artifact" />
+            <Box sx={whiteBoxStyle(completed, role)}>
+              <Box>
+                <Typography>{getRoleText()}</Typography>
+                <StyledSubtitle completed={completed} />
+              </Box>
             </Box>
-            <Box sx={getMenuCounterStyle(selectTextColor)}>
-              <IconButton onClick={handleRemoveItem}>
-                <AddButton minus />
-              </IconButton>
-              <Typography>{`${
-                elementCount + 1
-              }/${selectTextCount()}`}</Typography>
-              <IconButton onClick={handleAddItem}>
-                <AddButton />
-              </IconButton>
+            <Box sx={getSwipeAnimation(completed, role)}>
+              <Box sx={getWavesStyle(timePercent)}>
+                <Waves role={role} />
+                <Waves role={role} />
+                <Waves role={role} />
+                <Waves role={role} />
+              </Box>
+              <Box sx={getItemContainerStyle()} ref={ElementRef}>
+                {renderItems()}
+              </Box>
+              <Box sx={getMenuCounterStyle(selectTextColor)}>
+                <IconButton onClick={handleRemoveItem}>
+                  <AddButton minus />
+                </IconButton>
+                <Typography>{`${
+                  elementCount + 1
+                }/${selectTextCount()}`}</Typography>
+                <IconButton onClick={handleAddItem}>
+                  <AddButton />
+                </IconButton>
+              </Box>
+              <Box sx={taskGroupBackFace(role)}>
+                <LuLock className="svg-item" size={"32px"} />
+                <FaMoneyBillWave className="svg-item" size={"32px"} />
+                <IoMdHelp className="svg-item" size={"32px"} />
+                <Typography>{`${getRoleText()} Concluido!`}</Typography>
+                <IoMdRefresh className="svg-item" size={"32px"} />
+                <IoPlanet className="svg-item" size={"32px"} />
+                <BsCashCoin className="svg-item" size={"32px"} />
+                <BsClockHistory className="svg-item" size={"32px"} />
+              </Box>
             </Box>
-            <Box sx={taskGroupBackFace(role)}>
-              <LuLock className="svg-item" size={"32px"} />
-              <FaMoneyBillWave className="svg-item" size={"32px"} />
-              <IoMdHelp className="svg-item" size={"32px"} />
-              <Typography>{`${getRoleText()} Concluido!`}</Typography>
-              <IoMdRefresh className="svg-item" size={"32px"} />
-              <IoPlanet className="svg-item" size={"32px"} />
-              <BsCashCoin className="svg-item" size={"32px"} />
-              <BsClockHistory className="svg-item" size={"32px"} />
-            </Box>
-          </Box>
-        </StyledContainer>
+          </StyledContainer>
+        )}
 
         <Snackbar
           open={openSnackbar}

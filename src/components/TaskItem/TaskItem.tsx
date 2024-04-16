@@ -17,7 +17,7 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
         : variant === "HalfHour"
         ? 1800
         : variant === "SkipTask"
-        ? 1
+        ? 15
         : 3600
     );
     const [timerStarted, setTimerStarted] = useState(false);
