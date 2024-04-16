@@ -30,6 +30,11 @@ const TaskItem = React.forwardRef<HTMLDivElement, TaskItemProps>(
     }, [seconds, state, onComplete]);
 
     useEffect(() => {
+      if (timerStarted && seconds !== 0) {
+        document.title = formatTime(seconds);
+      } else {
+        document.title = "Técnica das 12 Horas";
+      }
       localStorage.setItem("seconds", JSON.stringify(seconds));
     }, [seconds]);
 
