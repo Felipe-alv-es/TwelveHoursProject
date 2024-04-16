@@ -130,31 +130,29 @@ const Home = () => {
 
   return (
     <Box>
-      <Box sx={{ display: "grid", placeItems: "center" }}>
-        <Box sx={getButtonsContainerStyle()}>
-          <Tooltip title="Pular tempo dos itens">
-            <IconButton onClick={handleSkip}>
-              <BsFillSkipForwardFill />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Resetar Tempo">
-            <IconButton onClick={handleDataUpdateStatus}>
-              <IoMdRefresh />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Mudar variante">
-            <IconButton onClick={handleClick}>
-              <FaExchangeAlt />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Ajuda">
-            <IconButton onClick={handleOpen}>
-              <IoMdHelp />
-            </IconButton>
-          </Tooltip>
-        </Box>
-        <Typography sx={getTitleStyle()}>Técnica das 12 Horas</Typography>
+      <Box sx={getButtonsContainerStyle()}>
+        <Tooltip title="Pular tempo dos itens">
+          <IconButton onClick={handleSkip}>
+            <BsFillSkipForwardFill />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Resetar Tempo">
+          <IconButton onClick={handleDataUpdateStatus}>
+            <IoMdRefresh />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Mudar variante">
+          <IconButton onClick={handleClick}>
+            <FaExchangeAlt />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Ajuda">
+          <IconButton onClick={handleOpen}>
+            <IoMdHelp />
+          </IconButton>
+        </Tooltip>
       </Box>
+      <Typography sx={getTitleStyle()}>Técnica das 12 Horas</Typography>
       <Typography sx={getSubtitleStyle()}>
         {"Se organize | Faça conexões | Desenvolva seu profissional"}
       </Typography>
