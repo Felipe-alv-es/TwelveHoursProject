@@ -1,0 +1,11 @@
+{
+  "files": {
+    "main.js": "/static/js/main.de23042f.js",
+    "static/media/Alarm03.wav": "/static/media/Alarm03.adee1cc9a1224f3fcb00.wav",
+    "index.html": "/index.html",
+    "main.de23042f.js.map": "/static/js/main.de23042f.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.de23042f.js"
+  ]
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import Alarm03 from "../../assets/audio/Alarm03.wav";
 import { Box, IconButton, Snackbar, Typography } from "@mui/material";
 import {
   StyledContainer,
@@ -14,8 +15,6 @@ import TaskItem from "../TaskItem/TaskItem.tsx";
 import { TaskGroupProps } from "./TaskGroup.types.ts";
 import AddButton from "../AddButton/AddButton.tsx";
 import Waves from "../Waves/Waves.tsx";
-// @ts-ignore
-import Alarm03 from "../../assets/audio/Alarm03.wav";
 import { LuLock } from "react-icons/lu";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { IoMdHelp, IoMdRefresh } from "react-icons/io";
