@@ -175,6 +175,11 @@ export const whiteBoxStyle = (
         "100%": { width: "35%" },
       },
     },
+    "@media(max-width: 1350px)": {
+      marginLeft: "-10%",
+      paddingLeft: "10%",
+      width: "45%",
+    },
   };
 };
 
@@ -241,6 +246,9 @@ export const taskGroupBackFace = (role): SxProps => ({
     fontSize: "24px",
     textTransform: "uppercase",
     whiteSpace: "nowrap",
+    "@media(max-width: 1350px)": {
+      fontSize: "14px",
+    },
   },
   "> svg": {
     color: "white",
