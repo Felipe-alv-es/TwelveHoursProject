@@ -12,6 +12,7 @@ import {
   getSubtitleStyle,
   getModalStyle,
   getButtonsContainerStyle,
+  getContainerStyle,
 } from "./Home.styles.ts";
 import { TaskGroupProps } from "../TaskGroup/TaskGroup.types.ts";
 import TaskGroup from "../TaskGroup/TaskGroup.tsx";
@@ -129,7 +130,7 @@ const Home = () => {
   }, [completeExtra, completeNet, completeReq]);
 
   return (
-    <Box>
+    <Box sx={getContainerStyle()}>
       <Box sx={getButtonsContainerStyle()}>
         <Tooltip title="Pular tempo dos itens">
           <IconButton onClick={handleSkip}>

@@ -1,5 +1,16 @@
 import { SxProps } from "@mui/material";
 
+export const getContainerStyle = (): SxProps => ({
+  height: "100vh",
+  paddingBottom: "1%",
+  "@media(max-width: 1360px)": {
+    height: "fit-content",
+  },
+  "@media(max-width: 1350px)": {
+    height: "100vh",
+  },
+});
+
 export const getTitleStyle = (): SxProps => ({
   fontSize: "60px",
   textAlign: "center",
@@ -29,62 +40,43 @@ export const getSubtitleStyle = (): SxProps => ({
 
 export const getButtonsContainerStyle = (): SxProps => ({
   position: "absolute",
-  "@media(max-width: 1360px)": {
-    right: "10%",
-    "> button": {
-      borderWidth: "2px",
-      borderStyle: "solid",
-      borderColor: "#FFFFF7",
-      marginLeft: "4px",
-      ":hover": {
-        borderColor: "#D4D4CE",
-        animation: "floater 1.5s infinite",
-        transform: "translateY(-3%)",
-        "@keyframes floater": {
-          "0%": { transform: "translateY(-3%);transition: ease 0.5s" },
-          "50%": { transform: "translateY(3%);transition: ease 0.5s" },
-        },
-      },
-      "> svg": {
-        height: "24px",
-        width: "24px",
-        color: "#FFFFF7",
-        ":hover": {
-          color: "#D4D4CE",
-        },
+  right: "10%",
+  marginTop: "3%",
+  "> button": {
+    borderWidth: "2px",
+    borderStyle: "solid",
+    borderColor: "#FFFFF7",
+    marginLeft: "4px",
+    ":hover": {
+      borderColor: "#D4D4CE",
+      animation: "floater 1.5s infinite",
+      transform: "translateY(-3%)",
+      "@keyframes floater": {
+        "0%": { transform: "translateY(-3%);transition: ease 0.5s" },
+        "50%": { transform: "translateY(3%);transition: ease 0.5s" },
       },
     },
+    "> svg": {
+      height: "24px",
+      width: "24px",
+      color: "#FFFFF7",
+      ":hover": {
+        color: "#D4D4CE",
+      },
+    },
+  },
+  "@media(max-width: 1360px)": {
+    right: "10%",
+    marginTop: "3%",
   },
   "@media(max-width: 1350px)": {
     bottom: 0,
     right: 0,
-    boxShadow: "0px 1px 3px 0px rgba(0, 0, 0, 0.5)",
+    marginTop: 0,
     width: "100%",
     display: "flex",
     justifyContent: "space-between",
     padding: "3% 15% 3% 15%",
-    "> button": {
-      borderWidth: "2px",
-      borderStyle: "solid",
-      borderColor: "gray",
-      ":hover": {
-        borderColor: "#D4D4CE",
-        animation: "floater 1.5s infinite",
-        transform: "translateY(-3%)",
-        "@keyframes floater": {
-          "0%": { transform: "translateY(-3%);transition: ease 0.5s" },
-          "50%": { transform: "translateY(3%);transition: ease 0.5s" },
-        },
-      },
-      "> svg": {
-        height: "24px",
-        width: "24px",
-        color: "gray",
-        ":hover": {
-          color: "#D4D4CE",
-        },
-      },
-    },
   },
 });
 
