@@ -338,6 +338,9 @@ export const getWavesStyle = (timePercent: number) => ({
   translate: `-2% ${timePercent === 0 ? 45 : timePercent}%`,
   transform: "translateX(-0%)",
   animation: "move-horizontal 10s linear infinite",
+  "> svg": {
+    marginLeft: "-4px",
+  },
   "@keyframes move-horizontal": {
     "0%": {
       transform: "translateX(-2%%)",
