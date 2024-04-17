@@ -11,9 +11,6 @@ export default createGlobalStyle`
     body {
         font-size: 16px;
         background: linear-gradient(to right, #e7e7e7, #e7e7e7);
-        background-image: url("https://www.pixground.com/wp-content/uploads/2023/09/Retro-Pixel-Art-AI-Generated-4K-Wallpaper-jpg.webp");
-        background-repeat: no-repeat;
-        background-size: cover;
         color: #383838;
     }
 

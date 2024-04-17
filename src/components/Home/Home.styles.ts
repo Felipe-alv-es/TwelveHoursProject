@@ -1,13 +1,37 @@
 import { SxProps } from "@mui/material";
+//@ts-ignore
+import Background from "../../assets/images/Background.jpg";
 
 export const getContainerStyle = (): SxProps => ({
   height: "100vh",
   paddingBottom: "1%",
+  backgroundImage: `url(${Background})`,
+  backgroundPosition: "0% 100%",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "120% 120%",
+  animation: "moveBackground 200s linear infinite",
+  "@media(max-width: 1940px)": {
+    backgroundSize: "cover",
+  },
   "@media(max-width: 1360px)": {
     height: "fit-content",
   },
   "@media(max-width: 1350px)": {
     height: "100vh",
+  },
+  "> svg:nth-of-type(2n)": {
+    transform: "rotateY(180deg)",
+  },
+  "@keyframes moveBackground": {
+    "0%": {
+      backgroundPosition: "0% 100%",
+    },
+    "50%": {
+      backgroundPosition: "100% 100%",
+    },
+    "100%": {
+      backgroundPosition: "0% 100%",
+    },
   },
 });
 
@@ -17,6 +41,7 @@ export const getTitleStyle = (): SxProps => ({
   paddingTop: "3%",
   fontWeight: "800",
   fontFamily: "Kanit",
+  color: "#FFFFF7",
   "@media(max-width: 1360px)": {
     fontSize: "60px",
   },
@@ -26,6 +51,7 @@ export const getTitleStyle = (): SxProps => ({
 });
 
 export const getSubtitleStyle = (): SxProps => ({
+  color: "#FFFFF7",
   fontSize: "24px",
   textAlign: "center",
   fontWeight: "600",
